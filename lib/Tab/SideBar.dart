@@ -6,8 +6,8 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBar extends State<SideBar>{
-
-
+  String dropdownValue = 'Candi Hindu';
+  var items = ['Candi Hindu', 'Candi Buddha'];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,14 +53,46 @@ class _SideBar extends State<SideBar>{
                 ),
               ),
               ListTile(
-                title: Text('Candi Keagamaan'),
+                title:
+                new  DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    // labelText: "Candi Keagamaan",
+                  ),
+                  value: dropdownValue,
+                  items: <String>['Candi Hindu', 'Candi Buddha']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (kategoriValue) {
+
+                  },
+                  // onTap: () => Navigator.pushNamed(
+                  //   context,
+                  //   'CandiHindu',
+                  // ),
+                ),
+
 
                 // onTap: () => Navigator.pushNamed(
                 //   context,
                 //   'CandiKeagamaan',
                 // ),
               ),
+              DropdownButton(items: items.map((itemsname){
+                return DropdownMenuItem(
+                  value: itemsname,
+                  child: Text(itemsname)
+                );
+              }).toList(),
+              onChanged: (String newValue){
 
+              },
+                value: dropdownValue,
+
+              ),
               ListTile(
                 title: Text('Candi Non Keagamaan'),
 

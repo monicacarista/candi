@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -36,7 +35,7 @@ void main() => runApp(MaterialApp(
     'HalamanUtama': (context) => HalamanUtama(),
     //  'UserViewModel' : (context) => UserViewModel(),
     'MyApp': (context) => MyApp(),
-     'Cari' :(context) => Cari(),
+    'Cari' :(context) => Cari(),
   },
   debugShowCheckedModeBanner: false,
 ));
@@ -379,7 +378,7 @@ class _Search extends State<Search> {
       // print(value);
       var head = SparqlResult.fromJson(value);
       for (var data in head.results.listTriples) {
-       // print(data);
+        // print(data);
         Tripleset tp = Tripleset(data.id,data.candi,data.lokasi,data.gambar,data.jenis,data.deskripsi,data.arca,data.upacara,data.relief,data.struktur_bangunan,data.bahan,data.namaLain,data.map,data.data);
         //print(data);
         jokes.add(tp);
@@ -405,7 +404,7 @@ class _Search extends State<Search> {
     jokes.forEach((f) {
       if (f.candi.value.toLowerCase().contains(text) || f.candi.value.toUpperCase().contains(text)||f.id.value.toString().contains(text))
         _search.add(f);
-     // print("f");
+      // print("f");
       print(f);
     });
 
