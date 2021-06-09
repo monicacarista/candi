@@ -101,7 +101,7 @@ class _Cari extends State<Cari> {
       var head = SparqlResult.fromJson(value);
       for (var data in head.results.listTriples) {
         print(data);
-        Tripleset tp = Tripleset(data.id,data.candi,data.lokasi,data.gambar,data.jenis,data.deskripsi,data.arca,data.upacara,data.relief,data.struktur_bangunan,data.bahan,data.namaLain,data.map,data.data);
+        Tripleset tp = Tripleset(data.id,data.idasal,data.candi,data.lokasi,data.gambar,data.jenis,data.deskripsi,data.arca,data.upacara,data.relief,data.struktur_bangunan,data.bahan,data.namaLain,data.map,data.data);
         //print(data);
         jokes.add(tp);
       }
@@ -248,3 +248,4 @@ class _Cari extends State<Cari> {
     );
   }
 }
+

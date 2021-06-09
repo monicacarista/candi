@@ -19,14 +19,14 @@ class CandiNonKeagamaan extends StatefulWidget {
 class _CandiNonKeagamaan extends State {
   List<Tripleset> jokes = [];
 
-  Future<List<Tripleset>> mainNon() async {
+  Future<List<Tripleset>> mainWanua() async {
     var payload = Uri.encodeComponent(
         "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
             "  prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
             "prefix : <http://alunalun.info/ontology/candi#>" +
             "prefix schema: <http://schema.org/>" +
             "PREFIX dbo: <http://dbpedia.org/ontology/>" +
-            "SELECT  ?id ?candi  ?jenis  ?lokasi ?data" +
+            "SELECT  ?id ?idasal ?candi  ?jenis  ?lokasi ?data" +
             "(GROUP_CONCAT(COALESCE(?arcas,''); separator = '' )as ?arca)" +
             "(COALESCE(?gmbr,'') as ?gambar)" +
             "(COALESCE (?mapp, '') as ?map)" +
@@ -41,8 +41,7 @@ class _CandiNonKeagamaan extends State {
             "   :CandiNonKeagamaan rdfs:label ?jenis." +
             "?id :sumberDB	?data."+
             "   ?id rdfs:label ?candi." +
-            "  OPTIONAL{?id :berasalDari ?idasal." +
-            "  ?idasal dbo:location ?asall. }" +
+
             "OPTIONAL{?id :Deskripsi ?desc.}" +
             "?id :berasalDari ?idasal." +
             "?idasal dbo:location ?lokasi. " +
@@ -59,7 +58,7 @@ class _CandiNonKeagamaan extends State {
             "OPTIONAL {?id :tersusunDari ?idbahan." +
             "?idbahan rdfs:label ?bahann.}" +
             "  OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}" +
-            "GROUP BY  ?id ?candi  ?jenis   ?lokasi ?gmbr ?mapp ?data");
+            "GROUP BY  ?id ?idasal ?candi  ?jenis   ?lokasi ?gmbr ?mapp ?data");
 
     var headers = new Map<String, String>();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -79,6 +78,7 @@ class _CandiNonKeagamaan extends State {
         print(data);
         Tripleset tp = Tripleset(
             data.id,
+            data.idasal,
             data.candi,
             data.lokasi,
             data.gambar,
@@ -103,7 +103,7 @@ class _CandiNonKeagamaan extends State {
   @override
   void initState() {
     super.initState();
-    mainNon();
+    mainWanua();
   }
 
   @override
@@ -115,16 +115,16 @@ class _CandiNonKeagamaan extends State {
       ),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
-          future: mainNon(),
+          future: mainWanua(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
-              print("DAta null");
+              print("Data null");
               return CircularProgressIndicator();
             } else {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (snapshot.data[index].gambar.value != "") {
+             //       if (snapshot.data[index].gambar.value != "") {
                       return new Card(
                         elevation: 2.0,
                         shape: new RoundedRectangleBorder(
@@ -150,9 +150,9 @@ class _CandiNonKeagamaan extends State {
                                   padding: new EdgeInsets.all(16.0),
                                   child: new Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: <Widget>[
                                         new ListTile(
                                           title: Text(
@@ -166,55 +166,55 @@ class _CandiNonKeagamaan extends State {
                                             onPressed: () {
                                               Navigator.of(context).push(MaterialPageRoute(
                                                   builder: (context) =>
-                                                      new DetailPage(
-                                                          candi: snapshot
-                                                              .data[index]
-                                                              .candi
-                                                              .value,
-                                                          lokasi: snapshot
-                                                              .data[index]
-                                                              .lokasi
-                                                              .value,
-                                                          gambar: snapshot
-                                                              .data[index]
-                                                              .gambar
-                                                              .value,
-                                                          jenis: snapshot
-                                                              .data[index]
-                                                              .jenis
-                                                              .value,
-                                                          deskripsi: snapshot
-                                                              .data[index]
-                                                              .deskripsi
-                                                              .value,
-                                                          arca: snapshot
-                                                              .data[index]
-                                                              .arca
-                                                              .value,
-                                                          upacara: snapshot
-                                                              .data[index]
-                                                              .upacara
-                                                              .value,
-                                                          relief: snapshot
-                                                              .data[index]
-                                                              .relief
-                                                              .value,
-                                                          sturktur_bangunan: snapshot
-                                                              .data[index]
-                                                              .struktur_bangunan
-                                                              .value,
-                                                          bahan: snapshot
-                                                              .data[index]
-                                                              .bahan
-                                                              .value,
-                                                          namaLain: snapshot
-                                                              .data[index]
-                                                              .namaLain
-                                                              .value,
-                                                          map: snapshot
-                                                              .data[index]
-                                                              .map
-                                                              .value,
+                                                  new DetailPage(
+                                                      candi: snapshot
+                                                          .data[index]
+                                                          .candi
+                                                          .value,
+                                                      lokasi: snapshot
+                                                          .data[index]
+                                                          .lokasi
+                                                          .value,
+                                                      gambar: snapshot
+                                                          .data[index]
+                                                          .gambar
+                                                          .value,
+                                                      jenis: snapshot
+                                                          .data[index]
+                                                          .jenis
+                                                          .value,
+                                                      deskripsi: snapshot
+                                                          .data[index]
+                                                          .deskripsi
+                                                          .value,
+                                                      arca: snapshot
+                                                          .data[index]
+                                                          .arca
+                                                          .value,
+                                                      upacara: snapshot
+                                                          .data[index]
+                                                          .upacara
+                                                          .value,
+                                                      relief: snapshot
+                                                          .data[index]
+                                                          .relief
+                                                          .value,
+                                                      sturktur_bangunan: snapshot
+                                                          .data[index]
+                                                          .struktur_bangunan
+                                                          .value,
+                                                      bahan: snapshot
+                                                          .data[index]
+                                                          .bahan
+                                                          .value,
+                                                      namaLain: snapshot
+                                                          .data[index]
+                                                          .namaLain
+                                                          .value,
+                                                      map: snapshot
+                                                          .data[index]
+                                                          .map
+                                                          .value,
                                                       data: snapshot.data[index].data.value)));
                                             },
                                           ),
@@ -223,7 +223,7 @@ class _CandiNonKeagamaan extends State {
                                           padding: new EdgeInsets.all(13.0),
                                           child: new Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
                                               new Text(snapshot
                                                   .data[index].jenis.value),
@@ -242,168 +242,10 @@ class _CandiNonKeagamaan extends State {
                         ),
                       );
                       return Text("ada");
-                    } else {
-                      return new Card(
-                        elevation: 2.0,
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(16.0),
-                        ),
-                        child: new InkWell(
-                          child: new Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              new ClipRRect(
-                                child: new Image.asset(
-                                  "assets/images/main.jpg",
-                                  //snapshot.data[index].gambar.value ?? 'https://via.placeholder.com/400x200',
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: new Radius.circular(16.0),
-                                  topRight: new Radius.circular(16.0),
-                                ),
-                              ),
-                              new Padding(
-                                  padding: new EdgeInsets.all(16.0),
-                                  child: new Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        new ListTile(
-                                          title: Text(
-                                            snapshot.data[index].candi.value,
-                                            style: new TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          trailing: new IconButton(
-                                            icon: new Icon(
-                                                FontAwesomeIcons.angleRight),
-                                            onPressed: () {
-                                              if (snapshot.data[index].gambar
-                                                      .value !=
-                                                  "") {
-                                                Navigator.of(context).push(MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        new DetailPage(
-                                                            candi: snapshot
-                                                                .data[index]
-                                                                .candi
-                                                                .value,
-                                                            lokasi: snapshot
-                                                                .data[index]
-                                                                .lokasi
-                                                                .value,
-                                                            gambar: snapshot
-                                                                .data[index]
-                                                                .gambar
-                                                                .value,
-                                                            jenis: snapshot
-                                                                .data[index]
-                                                                .jenis
-                                                                .value,
-                                                            deskripsi: snapshot
-                                                                .data[index]
-                                                                .deskripsi
-                                                                .value,
-                                                            arca: snapshot
-                                                                .data[index]
-                                                                .arca
-                                                                .value,
-                                                            upacara: snapshot
-                                                                .data[index]
-                                                                .upacara
-                                                                .value,
-                                                            relief: snapshot
-                                                                .data[index]
-                                                                .relief
-                                                                .value,
-                                                            sturktur_bangunan:
-                                                                snapshot
-                                                                    .data[index]
-                                                                    .struktur_bangunan
-                                                                    .value,
-                                                            bahan: snapshot
-                                                                .data[index]
-                                                                .bahan
-                                                                .value,
-                                                            namaLain: snapshot
-                                                                .data[index]
-                                                                .namaLain
-                                                                .value,
-                                                            map: snapshot.data[index].map.value)));
-                                              } else {
-                                                Navigator.of(context).push(MaterialPageRoute(
-                                                    builder: (context) => new DetailPage(
-                                                        candi: snapshot
-                                                            .data[index]
-                                                            .candi
-                                                            .value,
-                                                        lokasi: snapshot
-                                                            .data[index]
-                                                            .lokasi
-                                                            .value,
-                                                        gambar: snapshot.data[0]
-                                                            .gambar.value,
-                                                        jenis: snapshot
-                                                            .data[index]
-                                                            .jenis
-                                                            .value,
-                                                        deskripsi: snapshot
-                                                            .data[index]
-                                                            .deskripsi
-                                                            .value,
-                                                        arca: snapshot
-                                                            .data[index]
-                                                            .arca
-                                                            .value,
-                                                        upacara: snapshot
-                                                            .data[index]
-                                                            .upacara
-                                                            .value,
-                                                        relief: snapshot
-                                                            .data[index]
-                                                            .relief
-                                                            .value,
-                                                        sturktur_bangunan: snapshot
-                                                            .data[index]
-                                                            .struktur_bangunan
-                                                            .value,
-                                                        bahan: snapshot
-                                                            .data[index]
-                                                            .bahan
-                                                            .value,
-                                                        namaLain: snapshot.data[index].namaLain.value,
-                                                        map: snapshot.data[index].map.value)));
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: new EdgeInsets.all(13.0),
-                                          child: new Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              new Text(snapshot
-                                                  .data[index].jenis.value),
-                                              new Text(snapshot
-                                                  .data[index].lokasi.value),
-                                            ],
-                                          ),
-                                        )
-                                      ])),
-                            ],
-                          ),
-
-                          // onTap: () {
-                          //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => new DetailPage(data: this.data)));
-                          // },
-                        ),
-                      );
-                    }
-                  });
+            //        }
+                  //  else { }
+                  }
+            );
             }
           },
         ),

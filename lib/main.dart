@@ -4,6 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tes/CandiDaerah.dart';
 import 'package:flutter_tes/CandiNonKeagamaan.dart';
 import 'package:flutter_tes/CandiWanua.dart';
+import 'package:flutter_tes/CandiDaerah.dart';
+import 'package:flutter_tes/Daerah.dart';
 import 'package:flutter_tes/Tab/SideBar.dart';
 import 'package:flutter_tes/splashscreen_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -290,7 +292,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                         icon: new Icon(FontAwesomeIcons.angleRight),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => new CandiNonKeagamaan()));
+                              builder: (context) => new CandiDaerah()));
                         },
                       )),
                 ],
@@ -379,7 +381,7 @@ class _Search extends State<Search> {
       var head = SparqlResult.fromJson(value);
       for (var data in head.results.listTriples) {
         // print(data);
-        Tripleset tp = Tripleset(data.id,data.candi,data.lokasi,data.gambar,data.jenis,data.deskripsi,data.arca,data.upacara,data.relief,data.struktur_bangunan,data.bahan,data.namaLain,data.map,data.data);
+        Tripleset tp = Tripleset(data.id,data.idasal,data.candi,data.lokasi,data.gambar,data.jenis,data.deskripsi,data.arca,data.upacara,data.relief,data.struktur_bangunan,data.bahan,data.namaLain,data.map,data.data);
         //print(data);
         jokes.add(tp);
       }

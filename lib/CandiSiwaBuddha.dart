@@ -79,6 +79,7 @@ class _CandiSiwaBuddha extends State {
         print(data);
         Tripleset tp = Tripleset(
             data.id,
+            data.idasal,
             data.candi,
             data.lokasi,
             data.gambar,

@@ -26,7 +26,7 @@ class _CandiWanua extends State {
             "prefix : <http://alunalun.info/ontology/candi#>" +
             "prefix schema: <http://schema.org/>" +
             "PREFIX dbo: <http://dbpedia.org/ontology/>" +
-            "SELECT  ?id ?candi  ?jenis  ?lokasi ?data" +
+            "SELECT  ?id ?idasal ?candi  ?jenis  ?lokasi ?data" +
             "(GROUP_CONCAT(COALESCE(?arcas,''); separator = '' )as ?arca)" +
             "(COALESCE(?gmbr,'') as ?gambar)" +
             "(COALESCE (?mapp, '') as ?map)" +
@@ -41,8 +41,7 @@ class _CandiWanua extends State {
             "   :CandiWanuaWatak rdfs:label ?jenis." +
             "?id :sumberDB	?data."+
             "   ?id rdfs:label ?candi." +
-            "  OPTIONAL{?id :berasalDari ?idasal." +
-            "  ?idasal dbo:location ?asall. }" +
+
             "OPTIONAL{?id :Deskripsi ?desc.}" +
             "?id :berasalDari ?idasal." +
             "?idasal dbo:location ?lokasi. " +
@@ -59,7 +58,7 @@ class _CandiWanua extends State {
             "OPTIONAL {?id :tersusunDari ?idbahan." +
             "?idbahan rdfs:label ?bahann.}" +
             "  OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}" +
-            "GROUP BY  ?id ?candi  ?jenis   ?lokasi ?gmbr ?mapp ?data");
+            "GROUP BY  ?id ?idasal ?candi  ?jenis   ?lokasi ?gmbr ?mapp ?data");
 
     var headers = new Map<String, String>();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -79,6 +78,7 @@ class _CandiWanua extends State {
         print(data);
         Tripleset tp = Tripleset(
             data.id,
+            data.idasal,
             data.candi,
             data.lokasi,
             data.gambar,
