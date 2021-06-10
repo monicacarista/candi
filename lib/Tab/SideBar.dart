@@ -53,46 +53,22 @@ class _SideBar extends State<SideBar>{
                 ),
               ),
               ListTile(
-                title:
-                new  DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    // labelText: "Candi Keagamaan",
-                  ),
-                  value: dropdownValue,
-                  items: <String>['Candi Hindu', 'Candi Buddha']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (kategoriValue) {
+                title: Text('Candi Hindu'),
 
-                  },
-                  // onTap: () => Navigator.pushNamed(
-                  //   context,
-                  //   'CandiHindu',
-                  // ),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  'CandiHindu',
                 ),
-
-
-                // onTap: () => Navigator.pushNamed(
-                //   context,
-                //   'CandiKeagamaan',
-                // ),
               ),
-              DropdownButton(items: items.map((itemsname){
-                return DropdownMenuItem(
-                  value: itemsname,
-                  child: Text(itemsname)
-                );
-              }).toList(),
-              onChanged: (String newValue){
+              ListTile(
+                title: Text('Candi Buddha'),
 
-              },
-                value: dropdownValue,
-
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  'CandiBuddha',
+                ),
               ),
+
               ListTile(
                 title: Text('Candi Non Keagamaan'),
 

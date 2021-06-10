@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   ),
                   ListTile(
                       title: Text(
-                        "Candi Budha",
+                        "Candi Buddha",
                         style: new TextStyle(fontWeight: FontWeight.bold),
                       ),
                       trailing: new IconButton(
@@ -327,10 +327,9 @@ class _Search extends State<Search> {
             "prefix : <http://alunalun.info/ontology/candi#>"+
             "prefix schema: <http://schema.org/>"+
             " PREFIX dbo: <http://dbpedia.org/ontology/>"+
-            "  SELECT  ?id ?candi   ?lokasi"+
+            "  SELECT  ?id ?candi  ?idasal ?lokasi ?data"+
             "   (GROUP_CONCAT(COALESCE(?arcas,''); separator = '' )as ?arca)"+
             "(COALESCE (?gmbr, '') as ?gambar)"+
-
             "(COALESCE (?mapp, '') as ?map)"+
             "(GROUP_CONCAT(COALESCE(?acara,''); separator = '' )as ?upacara)"+
             "(GROUP_CONCAT(COALESCE(?jeniss,''); separator = '' )as ?jenis)"+
@@ -343,8 +342,7 @@ class _Search extends State<Search> {
             "?id rdf:type	?idtype."+
             "?idtype rdfs:label	?jeniss."+
             "?id rdfs:label ?candi."+
-            "OPTIONAL{?id :berasalDari ?idasal."+
-            "?idasal dbo:location ?asall. }"+
+            "?id :sumberDB	?data."+
             "OPTIONAL{?id :Deskripsi ?desc.}"+
             "?id :berasalDari ?idasal."+
             "?idasal dbo:location ?lokasi."+
@@ -361,7 +359,7 @@ class _Search extends State<Search> {
             "OPTIONAL {?id :tersusunDari ?idbahan."+
             "?idbahan rdfs:label ?bahann.}"+
             "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}"+
-            "GROUP BY  ?id ?candi    ?lokasi ?gmbr ?mapp");
+            "GROUP BY  ?id ?candi  ?idasal  ?lokasi ?gmbr ?mapp ?data");
 
 
     var headers = new Map<String, String>();
@@ -490,6 +488,7 @@ class _Search extends State<Search> {
                                     namaLain:b.namaLain.value,
                                     map: b.map.value,
                                     gambar: b.gambar.value,
+                                    data : b.data.value,
                                   )));
                                 },
                               )),

@@ -110,7 +110,7 @@ class _CandiWanua extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Candi Pribadi'),
+        title: Text('Candi Wanua'),
         backgroundColor: Colors.blueGrey.shade700,
       ),
       body: Center(

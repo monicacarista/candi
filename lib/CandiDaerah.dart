@@ -172,6 +172,7 @@ class _CandiDaerah extends State {
                                             Navigator.of(context).push(MaterialPageRoute(
                                                 builder: (context) => new Daerah(
                                                   idasal:snapshot.data[index].lokasi.value.toString(),
+
                                                 )));
                                           },
                                         ),
