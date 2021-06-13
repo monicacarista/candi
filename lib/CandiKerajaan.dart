@@ -21,43 +21,47 @@ class _CandiKerajaan extends State {
 
   Future<List<Tripleset>> mainKerajaan() async {
     var payload = Uri.encodeComponent(
-        "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-            "  prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-            "prefix : <http://alunalun.info/ontology/candi#>" +
-            "prefix schema: <http://schema.org/>" +
-            "PREFIX dbo: <http://dbpedia.org/ontology/>" +
-            "SELECT  ?id ?idasal ?candi  ?jenis  ?lokasi ?data" +
-            "(GROUP_CONCAT(COALESCE(?arcas,''); separator = '' )as ?arca)" +
-            "(COALESCE(?gmbr,'') as ?gambar)" +
-            "(COALESCE (?mapp, '') as ?map)" +
-            "  (GROUP_CONCAT(COALESCE(?acara,''); separator = '' )as ?upacara)" +
-            "(GROUP_CONCAT(COALESCE(?relieff,''); separator = '' )as ?relief)" +
-            "(GROUP_CONCAT(COALESCE(?sb,''); separator = '' )as ?struktur_bangunan)" +
-            "(GROUP_CONCAT(COALESCE(?nama,''); separator = '' )as ?namaLain)" +
-            " (GROUP_CONCAT(COALESCE(?bahann,''); separator = '' )as ?bahan)" +
-            "(GROUP_CONCAT(COALESCE(?desc,''); separator = '' )as ?deskripsi)" +
-            "  WHERE {" +
-            " ?id rdf:type :CandiKerajaan ." +
-            "   :CandiKerajaan rdfs:label ?jenis." +
-            "?id :sumberDB	?data."+
-            "   ?id rdfs:label ?candi." +
-            "OPTIONAL{?id :Deskripsi ?desc.}" +
-            "?id :berasalDari ?idasal." +
-            "?idasal dbo:location ?lokasi. " +
-            " OPTIONAL{?id :untukUpacara ?idu." +
-            "  ?idu rdfs:label ?acara}" +
-            "  OPTIONAL {?id :namaLainDari ?ida." +
-            "?ida rdfs:label ?nama}" +
-            "OPTIONAL {?id :terdapatRelief ?idrelief." +
-            "?idrelief rdfs:label ?relieff}" +
-            "OPTIONAL {?id :terdiriDari ?idsb." +
-            "?idsb rdfs:label ?sb}" +
-            "OPTIONAL {?id :Gambar1 ?gmbr}" +
-            "OPTIONAL {?id :map ?mapp.}" +
-            "OPTIONAL {?id :tersusunDari ?idbahan." +
-            "?idbahan rdfs:label ?bahann.}" +
-            "  OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}" +
-            "GROUP BY  ?id ?idasal ?candi  ?jenis   ?lokasi ?gmbr ?mapp ?data");
+        "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+            "   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
+            "prefix : <http://alunalun.info/ontology/candi#>"+
+            "prefix schema: <http://schema.org/>"+
+    "PREFIX dbo: <http://dbpedia.org/ontology/>"+
+    "SELECT ?id ?candi"+
+    "(coalesce(group_concat(distinct ?arcas; separator ='\\n'), '') as ?arca)"+
+            "(coalesce(group_concat(distinct ?idasall; separator ='\\n'), '') as ?idasal)"+
+            "(coalesce(group_concat(distinct ?lokasii; separator ='\\n'), '') as ?lokasi)"+
+    "(coalesce(group_concat(distinct ?acara; separator ='\\n'), '') as ?upacara)"+
+    "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '') as ?bahan)"+
+    "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)"+
+    "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)"+
+    "(coalesce(group_concat(distinct ?relieff; separator =','), '') as ?relief)"+
+    "(coalesce(group_concat(distinct ?sb; separator =','), '') as ?struktur_bangunan)"+
+    "(coalesce(group_concat(distinct ?nama; separator =','), '') as ?namaLain)"+
+    "(coalesce(group_concat(distinct ?desc; separator =','), '') as ?deskripsi)"+
+    "(coalesce(group_concat(distinct ?jeniss; separator =','), '') as ?jenis)"+
+    "(coalesce(group_concat(distinct ?dataa; separator =','), '') as ?data)"+
+    "WHERE {"+
+    " ?id rdf:type :CandiKerajaan ."+
+    "   :CandiKerajaan rdfs:label ?jeniss."+
+    "?id :sumberDB	?dataa."+
+    " ?id rdfs:label ?candi."+
+    "OPTIONAL{?id :Deskripsi ?desc.}"+
+    "?id :berasalDari ?idasall."+
+    "?idasall dbo:location ?lokasii."+
+    "OPTIONAL{?id :untukUpacara ?id."+
+    "?idu rdfs:label ?acara}"+
+    "OPTIONAL {?id :namaLainDari ?ida."+
+    "?ida rdfs:label ?nama}"+
+    "OPTIONAL {?id :terdapatRelief ?idrelief."+
+    "?idrelief rdfs:label ?relieff}"+
+    "OPTIONAL {?id :terdiriDari ?idsb."+
+    "?idsb rdfs:label ?sb}"+
+    "OPTIONAL {?id :Gambar1 ?gmbr}"+
+    "OPTIONAL {?id :map ?mapp.}"+
+    "OPTIONAL {?id :tersusunDari ?idbahan."+
+    "?idbahan rdfs:label ?bahann.}"+
+    "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}"+
+    "GROUP BY  ?id ?candi ");
 
     var headers = new Map<String, String>();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -89,7 +93,8 @@ class _CandiKerajaan extends State {
             data.struktur_bangunan,
             data.bahan,
             data.namaLain,
-            data.map,data.data);
+            data.map,
+            data.data);
         //print(data);
         jokes.add(tp);
       }

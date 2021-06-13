@@ -78,8 +78,8 @@ class Tripleset {
       TypeValue.fromJson(json['relief']),
       TypeValue.fromJson(json['struktur_bangunan']),
       TypeValue.fromJson(json['bahan']),
-      TypeValue.fromJson(json['map']),
       TypeValue.fromJson(json['namaLain']),
+      TypeValue.fromJson(json['map']),
       TypeValue.fromJson(json['data']),
 
     );

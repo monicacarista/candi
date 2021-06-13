@@ -476,7 +476,7 @@ class _Search extends State<Search> {
                                 icon: new Icon(FontAwesomeIcons.angleRight),
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => new DetailPage(
-                                    candi: b.jenis.value,
+                                    candi: b.candi.value,
                                     jenis: b.jenis.value,
                                     lokasi : b.lokasi.value,
                                     deskripsi: b.deskripsi.value,
