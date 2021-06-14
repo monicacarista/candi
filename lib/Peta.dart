@@ -9,25 +9,25 @@ import 'package:flutter_tes/detailPage.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: HalamanUtama(),
+    home: Peta(),
     debugShowCheckedModeBanner: false,
   ));
 }
 
-class HalamanUtama extends StatefulWidget {
+class Peta extends StatefulWidget {
   final String map;
 
-  HalamanUtama(
+  Peta(
       {Key key, @required this.map})
       : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState(map);
+  _Peta createState() => _Peta(map);
 }
 
-class _HomeState extends State<HalamanUtama> {
+class _Peta extends State<Peta> {
 String map;
-_HomeState(this.map);
+_Peta(this.map);
 
   @override
   void initState() {

@@ -34,12 +34,12 @@ class _CandiKerajaan extends State {
     "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '') as ?bahan)"+
     "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)"+
     "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)"+
-    "(coalesce(group_concat(distinct ?relieff; separator =','), '') as ?relief)"+
-    "(coalesce(group_concat(distinct ?sb; separator =','), '') as ?struktur_bangunan)"+
-    "(coalesce(group_concat(distinct ?nama; separator =','), '') as ?namaLain)"+
-    "(coalesce(group_concat(distinct ?desc; separator =','), '') as ?deskripsi)"+
-    "(coalesce(group_concat(distinct ?jeniss; separator =','), '') as ?jenis)"+
-    "(coalesce(group_concat(distinct ?dataa; separator =','), '') as ?data)"+
+    "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '') as ?relief)"+
+    "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '') as ?struktur_bangunan)"+
+    "(coalesce(group_concat(distinct ?nama; separator ='\\n'), '') as ?namaLain)"+
+    "(coalesce(group_concat(distinct ?desc; separator ='\\n'), '') as ?deskripsi)"+
+    "(coalesce(group_concat(distinct ?jeniss; separator ='\\n'), '') as ?jenis)"+
+    "(coalesce(group_concat(distinct ?dataa; separator ='\\n'), '') as ?data)"+
     "WHERE {"+
     " ?id rdf:type :CandiKerajaan ."+
     "   :CandiKerajaan rdfs:label ?jeniss."+
@@ -122,13 +122,13 @@ class _CandiKerajaan extends State {
           future: mainKerajaan(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
-              print("Data null");
+              print("DAta null");
               return CircularProgressIndicator();
             } else {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (snapshot.data[index].gambar.value != "") {
+                    if (snapshot.data[index].gambar.value != '') {
                       return new Card(
                         elevation: 2.0,
                         shape: new RoundedRectangleBorder(
@@ -169,8 +169,7 @@ class _CandiKerajaan extends State {
                                                 FontAwesomeIcons.angleRight),
                                             onPressed: () {
                                               Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                  new DetailPage(
+                                                  builder: (context) => new DetailPage(
                                                       candi: snapshot
                                                           .data[index]
                                                           .candi
@@ -191,10 +190,8 @@ class _CandiKerajaan extends State {
                                                           .data[index]
                                                           .deskripsi
                                                           .value,
-                                                      arca: snapshot
-                                                          .data[index]
-                                                          .arca
-                                                          .value,
+                                                      arca: snapshot.data[index]
+                                                          .arca.value,
                                                       upacara: snapshot
                                                           .data[index]
                                                           .upacara
@@ -203,7 +200,8 @@ class _CandiKerajaan extends State {
                                                           .data[index]
                                                           .relief
                                                           .value,
-                                                      sturktur_bangunan: snapshot
+                                                      sturktur_bangunan:
+                                                      snapshot
                                                           .data[index]
                                                           .struktur_bangunan
                                                           .value,
@@ -215,10 +213,8 @@ class _CandiKerajaan extends State {
                                                           .data[index]
                                                           .namaLain
                                                           .value,
-                                                      map: snapshot
-                                                          .data[index]
-                                                          .map
-                                                          .value,
+                                                      map: snapshot.data[index]
+                                                          .map.value,
                                                       data: snapshot.data[index].data.value)));
                                             },
                                           ),
@@ -258,8 +254,8 @@ class _CandiKerajaan extends State {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               new ClipRRect(
-                                child: new Image.asset(
-                                  "assets/images/main.jpg",
+                                child: new Image.network(
+                                    "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg"
                                   //snapshot.data[index].gambar.value ?? 'https://via.placeholder.com/400x200',
                                 ),
                                 borderRadius: BorderRadius.only(
@@ -285,102 +281,101 @@ class _CandiKerajaan extends State {
                                             icon: new Icon(
                                                 FontAwesomeIcons.angleRight),
                                             onPressed: () {
-                                              if (snapshot.data[index].gambar
-                                                  .value !=
-                                                  "") {
-                                                Navigator.of(context).push(MaterialPageRoute(
-                                                    builder: (context) =>
-                                                    new DetailPage(
-                                                        candi: snapshot
-                                                            .data[index]
-                                                            .candi
-                                                            .value,
-                                                        lokasi: snapshot
-                                                            .data[index]
-                                                            .lokasi
-                                                            .value,
-                                                        gambar: snapshot
-                                                            .data[index]
-                                                            .gambar
-                                                            .value,
-                                                        jenis: snapshot
-                                                            .data[index]
-                                                            .jenis
-                                                            .value,
-                                                        deskripsi: snapshot
-                                                            .data[index]
-                                                            .deskripsi
-                                                            .value,
-                                                        arca: snapshot
-                                                            .data[index]
-                                                            .arca
-                                                            .value,
-                                                        upacara: snapshot
-                                                            .data[index]
-                                                            .upacara
-                                                            .value,
-                                                        relief: snapshot
-                                                            .data[index]
-                                                            .relief
-                                                            .value,
-                                                        sturktur_bangunan:
-                                                        snapshot
-                                                            .data[index]
-                                                            .struktur_bangunan
-                                                            .value,
-                                                        bahan: snapshot
-                                                            .data[index]
-                                                            .bahan
-                                                            .value,
-                                                        namaLain: snapshot
-                                                            .data[index]
-                                                            .namaLain
-                                                            .value,
-                                                        map: snapshot.data[index].map.value)));
-                                              } else {
-                                                Navigator.of(context).push(MaterialPageRoute(
-                                                    builder: (context) => new DetailPage(
-                                                        candi: snapshot
-                                                            .data[index]
-                                                            .candi
-                                                            .value,
-                                                        lokasi: snapshot
-                                                            .data[index]
-                                                            .lokasi
-                                                            .value,
-                                                        gambar: snapshot.data[0]
-                                                            .gambar.value,
-                                                        jenis: snapshot
-                                                            .data[index]
-                                                            .jenis
-                                                            .value,
-                                                        deskripsi: snapshot
-                                                            .data[index]
-                                                            .deskripsi
-                                                            .value,
-                                                        arca: snapshot
-                                                            .data[index]
-                                                            .arca
-                                                            .value,
-                                                        upacara: snapshot
-                                                            .data[index]
-                                                            .upacara
-                                                            .value,
-                                                        relief: snapshot
-                                                            .data[index]
-                                                            .relief
-                                                            .value,
-                                                        sturktur_bangunan: snapshot
-                                                            .data[index]
-                                                            .struktur_bangunan
-                                                            .value,
-                                                        bahan: snapshot
-                                                            .data[index]
-                                                            .bahan
-                                                            .value,
-                                                        namaLain: snapshot.data[index].namaLain.value,
-                                                        map: snapshot.data[index].map.value)));
-                                              }
+                                              // if (snapshot.data[index].gambar
+                                              //     .value !=
+                                              //     "") {
+                                              Navigator.of(context).push(MaterialPageRoute(
+                                                  builder: (context) => new DetailPage(
+                                                      candi: snapshot
+                                                          .data[index]
+                                                          .candi
+                                                          .value,
+                                                      lokasi: snapshot
+                                                          .data[index]
+                                                          .lokasi
+                                                          .value,
+                                                      gambar:
+                                                      "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
+                                                      jenis: snapshot
+                                                          .data[index]
+                                                          .jenis
+                                                          .value,
+                                                      deskripsi: snapshot
+                                                          .data[index]
+                                                          .deskripsi
+                                                          .value,
+                                                      arca: snapshot.data[index]
+                                                          .arca.value,
+                                                      upacara: snapshot
+                                                          .data[index]
+                                                          .upacara
+                                                          .value,
+                                                      relief: snapshot
+                                                          .data[index]
+                                                          .relief
+                                                          .value,
+                                                      sturktur_bangunan: snapshot
+                                                          .data[index]
+                                                          .struktur_bangunan
+                                                          .value,
+                                                      bahan: snapshot
+                                                          .data[index]
+                                                          .bahan
+                                                          .value,
+                                                      namaLain: snapshot
+                                                          .data[index]
+                                                          .namaLain
+                                                          .value,
+                                                      map: snapshot.data[index]
+                                                          .map.value,
+                                                      data: snapshot.data[index]
+                                                          .data.value)));
+                                              //}
+                                              // else
+                                              // {
+                                              //   Navigator.of(context).push(MaterialPageRoute(
+                                              //       builder: (context) => new DetailPage(
+                                              //           candi: snapshot
+                                              //               .data[index]
+                                              //               .candi
+                                              //               .value,
+                                              //           lokasi: snapshot
+                                              //               .data[index]
+                                              //               .lokasi
+                                              //               .value,
+                                              //           gambar: snapshot.data[0]
+                                              //               .gambar.value,
+                                              //           jenis: snapshot
+                                              //               .data[index]
+                                              //               .jenis
+                                              //               .value,
+                                              //           deskripsi: snapshot
+                                              //               .data[index]
+                                              //               .deskripsi
+                                              //               .value,
+                                              //           arca: snapshot
+                                              //               .data[index]
+                                              //               .arca
+                                              //               .value,
+                                              //           upacara: snapshot
+                                              //               .data[index]
+                                              //               .upacara
+                                              //               .value,
+                                              //           relief: snapshot
+                                              //               .data[index]
+                                              //               .relief
+                                              //               .value,
+                                              //           sturktur_bangunan: snapshot
+                                              //               .data[index]
+                                              //               .struktur_bangunan
+                                              //               .value,
+                                              //           bahan: snapshot
+                                              //               .data[index]
+                                              //               .bahan
+                                              //               .value,
+                                              //           namaLain: snapshot.data[index].namaLain.value,
+                                              //           map: snapshot.data[index].map.value)));
+                                              //}
                                             },
                                           ),
                                         ),

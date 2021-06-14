@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_tes/halamanutama.dart';
+import 'package:flutter_tes/Peta.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'model.dart';
@@ -98,6 +98,8 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
         // appBar: AppBar(
         //   title: Text('Candi Non Keagamaan'),
         //   backgroundColor: Colors.blueGrey.shade700,
@@ -133,36 +135,60 @@ class _DetailPageState extends State<DetailPage> {
                       icon: new Icon(FontAwesomeIcons.mapMarkedAlt),
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => new HalamanUtama(
+                            builder: (context) => new Peta(
                                   map: map,
                                 )));
                       }),
-                  new SizedBox(height: 15.0),
+                  new SizedBox(height: 5.0),
                   new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       new Text("Nama Lain :"),
-                      new Text(namaLain),
                     ],
                   ),
-                  new SizedBox(height: 15.0),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(child: Text(namaLain,
+                          maxLines: 10,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
+                    ],
+                  ),
+                  new SizedBox(height: 5.0),
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       new Text("Asal :"),
-                      new Text(lokasi),
                     ],
                   ),
-                  new SizedBox(height: 12.0),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(child: Text(lokasi,
+                          maxLines: 10,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
+                    ],
+                  ),
+                  new SizedBox(height: 5.0),
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       new Text("Jenis :"),
-                      new Text(jenis),
                     ],
                   ),
-                  //   new Divider(),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(child: Text(jenis,
+                        maxLines: 10,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,style: TextStyle(height: 1),))
+                    ],
+                  ),
 
-                  new SizedBox(height: 12.0),
+                  new SizedBox(height: 5.0),
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -175,82 +201,120 @@ class _DetailPageState extends State<DetailPage> {
                       Flexible(child: Text(arca,
                         maxLines: 10,
                         softWrap: false,
-                        overflow: TextOverflow.ellipsis,))
+                        overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
                     ],
                   ),
-                  new SizedBox(height: 12.0),
+                  new SizedBox(height: 5.0),
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       new Text("Relief :"),
-                      new Text(lokasi),
-                    ],
-                  ),
-                  new SizedBox(height: 12.0),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Strukur Bangunan :"),
-                      new Text(lokasi),
-                    ],
-                  ),
-                  new SizedBox(height: 12.0),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Bahan Bangunan :"),
-                      new Text(lokasi),
-                    ],
-                  ),
-                  new SizedBox(height: 12.0),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Upacara"),
                     ],
                   ),
                   new Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      new Text(
-                        upacara,
-                        style: TextStyle(height: 2),
-                      ),
+                      Flexible(child: Text(relief,
+                          maxLines: 10,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
                     ],
                   ),
 
-                  new SizedBox(height: 12.0),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Deskripsi"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                    Flexible(child: Text(deskripsi,
-                    maxLines: 10,
-                    softWrap: false,
-                    overflow: TextOverflow.ellipsis,))
-                    ],
-                  ),
+                 Expanded(
+                     child: Container(
+                       child: Column(
+                         children: <Widget>[
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               new Text("Struktur Bangunan :"),
+                             ],
+                           ),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               Flexible(child: Text(sturktur_bangunan,
+                                   maxLines: 10,
+                                   softWrap: false,
+                                   overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
+                             ],
+                           ),
+                           new SizedBox(height: 5.0),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               new Text("Bahan Bangunan :"),
+                             ],
+                           ),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               Flexible(child: Text(bahan,
+                                   maxLines: 10,
+                                   softWrap: false,
+                                   overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
+                             ],
+                           ),
+                           new SizedBox(height: 5.0),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               new Text("Upacara :"),
+                             ],
+                           ),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               Text(upacara,
+                                   style: TextStyle(height: 1))
+                             ],
+                           ),
+                           new SizedBox(height: 5.0),
 
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text(
-                        "Sumber :",
-                        style: TextStyle(fontSize: 10.0),
-                        textAlign: TextAlign.right,
-                      ),
-                      new Text(
-                        lokasi,
-                        style: TextStyle(fontSize: 10.0),
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
+
+                           new SizedBox(height: 5.0),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               new Text("Deskripsi"),
+                             ],
+                           ),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               Flexible(child: Text(deskripsi,
+                                   maxLines: 10,
+                                   softWrap: false,
+                                   overflow: TextOverflow.ellipsis,style: TextStyle(height: 1)))
+                             ],
+                           ),
+                           new SizedBox(height: 5.0),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               new Text("Sumber :",style: TextStyle(fontSize: 10),),
+                             ],
+                           ),
+                           new Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: <Widget>[
+                               Flexible(child: Text(data,
+                                   maxLines: 10,
+                                   softWrap: false,
+                                   overflow: TextOverflow.ellipsis,style: TextStyle(height: 1,fontSize: 10)))
+                             ],
+                           ),
+
+                         ],
+                       ),
+
+
+                     ),)
+
+
+
+
                   // new Row(
                   //   mainAxisAlignment: MainAxisAlignment.end,
                   //   children: <Widget>[
@@ -271,6 +335,8 @@ class _DetailPageState extends State<DetailPage> {
       //   }
       // },
       // ),
-    ));
+    )
+
+    );
   }
 }

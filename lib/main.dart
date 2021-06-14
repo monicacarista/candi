@@ -11,7 +11,7 @@ import 'package:flutter_tes/splashscreen_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_tes/halamanutama.dart';
+import 'package:flutter_tes/Peta.dart';
 import 'package:flutter_tes/CandiKerajaan.dart';
 import 'package:flutter_tes/CandiPribadi.dart';
 import 'package:flutter_tes/Info.dart';
@@ -34,7 +34,7 @@ void main() => runApp(MaterialApp(
     'CandiPribadi': (context) => CandiPribadi(),
     'About': (context) => About(),
     'Info': (context) => Info(),
-    'HalamanUtama': (context) => HalamanUtama(),
+    'Peta': (context) => Peta(),
     //  'UserViewModel' : (context) => UserViewModel(),
     'MyApp': (context) => MyApp(),
     'Cari' :(context) => Cari(),
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     CandiPribadi(),
     CandiWanua(),
     // CandiDaerah(),
-    HalamanUtama(),
+    Peta(),
     // UserViewModel(),
     MyApp(),
     Cari(),
@@ -457,21 +457,23 @@ class _Search extends State<Search> {
                 itemCount: _search.length,
                 itemBuilder: (context, index) {
                   final b = _search[index];
-                  print("gambar");
-                  print(b.gambar.value);
-                  print(b.candi.value);
+                  // print("gambar");
+                  // print(b.gambar.value);
+                  // print(b.candi.value);
                   return Container(
                       padding: EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment:
                         CrossAxisAlignment.start,
                         children: <Widget>[
-
-                          ListTile(
-                              title: Text(
-                                b.candi.value,
-                                style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                              ),
+                          new ListTile(
+                            leading: Image.network(
+                              b.gambar.value,
+                              fit: BoxFit.cover,
+                              width: 50,
+                              height: 50,
+                            ),
+                          title: Text( b.candi.value),
                               trailing: new IconButton(
                                 icon: new Icon(FontAwesomeIcons.angleRight),
                                 onPressed: () {
@@ -491,15 +493,8 @@ class _Search extends State<Search> {
                                     data : b.data.value,
                                   )));
                                 },
-                              )),
-                          new ClipRRect(
-                            child: new Image.network(
-                              b.gambar.value,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: new Radius.circular(16.0),
-                              topRight: new Radius.circular(16.0),
-                            ),
+                              )
+
                           ),
                           // Text(
                           //   b.candi.value,
