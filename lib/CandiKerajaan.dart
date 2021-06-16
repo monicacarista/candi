@@ -25,43 +25,47 @@ class _CandiKerajaan extends State {
             "   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
             "prefix : <http://alunalun.info/ontology/candi#>"+
             "prefix schema: <http://schema.org/>"+
-    "PREFIX dbo: <http://dbpedia.org/ontology/>"+
-    "SELECT ?id ?candi"+
-    "(coalesce(group_concat(distinct ?arcas; separator ='\\n'), '') as ?arca)"+
+            "PREFIX dbo: <http://dbpedia.org/ontology/>"+
+            "SELECT ?id ?candi"+
+            "(coalesce(group_concat(distinct ?arcas; separator ='\\n'), '') as ?arca)"+
             "(coalesce(group_concat(distinct ?idasall; separator ='\\n'), '') as ?idasal)"+
             "(coalesce(group_concat(distinct ?lokasii; separator ='\\n'), '') as ?lokasi)"+
-    "(coalesce(group_concat(distinct ?acara; separator ='\\n'), '') as ?upacara)"+
-    "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '') as ?bahan)"+
-    "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)"+
-    "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)"+
-    "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '') as ?relief)"+
-    "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '') as ?struktur_bangunan)"+
-    "(coalesce(group_concat(distinct ?nama; separator ='\\n'), '') as ?namaLain)"+
-    "(coalesce(group_concat(distinct ?desc; separator ='\\n'), '') as ?deskripsi)"+
-    "(coalesce(group_concat(distinct ?jeniss; separator ='\\n'), '') as ?jenis)"+
-    "(coalesce(group_concat(distinct ?dataa; separator ='\\n'), '') as ?data)"+
-    "WHERE {"+
-    " ?id rdf:type :CandiKerajaan ."+
-    "   :CandiKerajaan rdfs:label ?jeniss."+
-    "?id :sumberDB	?dataa."+
-    " ?id rdfs:label ?candi."+
-    "OPTIONAL{?id :Deskripsi ?desc.}"+
-    "?id :berasalDari ?idasall."+
-    "?idasall dbo:location ?lokasii."+
-    "OPTIONAL{?id :untukUpacara ?id."+
-    "?idu rdfs:label ?acara}"+
-    "OPTIONAL {?id :namaLainDari ?ida."+
-    "?ida rdfs:label ?nama}"+
-    "OPTIONAL {?id :terdapatRelief ?idrelief."+
-    "?idrelief rdfs:label ?relieff}"+
-    "OPTIONAL {?id :terdiriDari ?idsb."+
-    "?idsb rdfs:label ?sb}"+
-    "OPTIONAL {?id :Gambar1 ?gmbr}"+
-    "OPTIONAL {?id :map ?mapp.}"+
-    "OPTIONAL {?id :tersusunDari ?idbahan."+
-    "?idbahan rdfs:label ?bahann.}"+
-    "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}"+
-    "GROUP BY  ?id ?candi ");
+            "(coalesce(group_concat(distinct ?acara; separator ='\\n'), '') as ?upacara)"+
+            "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '') as ?bahan)"+
+            "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)"+
+            "(coalesce(group_concat(distinct ?gmbr1; separator ='\\n'), '') as ?gambar1)"+
+            "(coalesce(group_concat(distinct ?gmbr2; separator ='\\n'), '') as ?gambar2)"+
+            "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)"+
+            "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '') as ?relief)"+
+            "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '') as ?struktur_bangunan)"+
+            "(coalesce(group_concat(distinct ?nama; separator ='\\n'), '') as ?namaLain)"+
+            "(coalesce(group_concat(distinct ?desc; separator ='\\n'), '') as ?deskripsi)"+
+            "(coalesce(group_concat(distinct ?jeniss; separator ='\\n'), '') as ?jenis)"+
+            "(coalesce(group_concat(distinct ?dataa; separator ='\\n'), '') as ?data)"+
+            "WHERE {"+
+            " ?id rdf:type :CandiKerajaan ."+
+            "   :CandiKerajaan rdfs:label ?jeniss."+
+            "?id :sumberDB	?dataa."+
+            " ?id rdfs:label ?candi."+
+            "OPTIONAL{?id :Deskripsi ?desc.}"+
+            "?id :berasalDari ?idasall."+
+            "?idasall dbo:location ?lokasii."+
+            "OPTIONAL{?id :untukUpacara ?id."+
+            "?idu rdfs:label ?acara}"+
+            "OPTIONAL {?id :namaLainDari ?ida."+
+            "?ida rdfs:label ?nama}"+
+            "OPTIONAL {?id :terdapatRelief ?idrelief."+
+            "?idrelief rdfs:label ?relieff}"+
+            "OPTIONAL {?id :terdiriDari ?idsb."+
+            "?idsb rdfs:label ?sb}"+
+            "OPTIONAL {?id :Gambar1 ?gmbr}"+
+            "OPTIONAL {?id :Gambar2 ?gmbr1}"+
+            "OPTIONAL {?id :Gambar3 ?gmbr2}"+
+            "OPTIONAL {?id :map ?mapp.}"+
+            "OPTIONAL {?id :tersusunDari ?idbahan."+
+            "?idbahan rdfs:label ?bahann.}"+
+            "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}"+
+            "GROUP BY  ?id ?candi ");
 
     var headers = new Map<String, String>();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -85,6 +89,8 @@ class _CandiKerajaan extends State {
             data.candi,
             data.lokasi,
             data.gambar,
+            data.gambar1,
+            data.gambar2,
             data.jenis,
             data.deskripsi,
             data.arca,
@@ -93,8 +99,7 @@ class _CandiKerajaan extends State {
             data.struktur_bangunan,
             data.bahan,
             data.namaLain,
-            data.map,
-            data.data);
+            data.map,data.data);
         //print(data);
         jokes.add(tp);
       }
@@ -128,7 +133,7 @@ class _CandiKerajaan extends State {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (snapshot.data[index].gambar.value != '') {
+                    if (snapshot.data[index].gambar.value != "") {
                       return new Card(
                         elevation: 2.0,
                         shape: new RoundedRectangleBorder(
@@ -182,6 +187,8 @@ class _CandiKerajaan extends State {
                                                           .data[index]
                                                           .gambar
                                                           .value,
+                                                      gambar1 : snapshot.data[index].gambar1.value,
+                                                      gambar2: snapshot.data[index].gambar2.value,
                                                       jenis: snapshot
                                                           .data[index]
                                                           .jenis
@@ -255,7 +262,7 @@ class _CandiKerajaan extends State {
                             children: <Widget>[
                               new ClipRRect(
                                 child: new Image.network(
-                                    "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg"
+                                    "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg"
                                   //snapshot.data[index].gambar.value ?? 'https://via.placeholder.com/400x200',
                                 ),
                                 borderRadius: BorderRadius.only(
@@ -295,7 +302,11 @@ class _CandiKerajaan extends State {
                                                           .lokasi
                                                           .value,
                                                       gambar:
-                                                      "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
+                                                      "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg",
+                                                      gambar1:
+                                                      "http://sharingdisini.com/wp-content/uploads/2012/10/Candi-Budha.png",
+                                                      gambar2:
+                                                      "https://i.pinimg.com/564x/41/d6/3b/41d63ba3378b5b142fd893f2a7952e4d.jpg",
                                                       jenis: snapshot
                                                           .data[index]
                                                           .jenis

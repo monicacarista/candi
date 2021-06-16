@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_tes/detailPage.dart';
+import 'package:flutter_tes/gambar.dart';
 import 'package:flutter_tes/model.dart';
 import 'package:flutter_tes/Tab/SideBar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,7 +20,7 @@ class CandiSiwaBuddha extends StatefulWidget {
 class _CandiSiwaBuddha extends State {
   List<Tripleset> jokes = [];
 
-  Future<List<Tripleset>> mainSiwa() async {
+  Future<List<Tripleset>> mainSiwaBuddha() async {
     var payload = Uri.encodeComponent(
         "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
             "   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
@@ -33,6 +34,8 @@ class _CandiSiwaBuddha extends State {
             "(coalesce(group_concat(distinct ?acara; separator ='\\n'), '') as ?upacara)"+
             "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '') as ?bahan)"+
             "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)"+
+            "(coalesce(group_concat(distinct ?gmbr1; separator ='\\n'), '') as ?gambar1)"+
+            "(coalesce(group_concat(distinct ?gmbr2; separator ='\\n'), '') as ?gambar2)"+
             "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)"+
             "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '') as ?relief)"+
             "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '') as ?struktur_bangunan)"+
@@ -57,6 +60,8 @@ class _CandiSiwaBuddha extends State {
             "OPTIONAL {?id :terdiriDari ?idsb."+
             "?idsb rdfs:label ?sb}"+
             "OPTIONAL {?id :Gambar1 ?gmbr}"+
+            "OPTIONAL {?id :Gambar2 ?gmbr1}"+
+            "OPTIONAL {?id :Gambar3 ?gmbr2}"+
             "OPTIONAL {?id :map ?mapp.}"+
             "OPTIONAL {?id :tersusunDari ?idbahan."+
             "?idbahan rdfs:label ?bahann.}"+
@@ -85,6 +90,8 @@ class _CandiSiwaBuddha extends State {
             data.candi,
             data.lokasi,
             data.gambar,
+            data.gambar1,
+            data.gambar2,
             data.jenis,
             data.deskripsi,
             data.arca,
@@ -106,7 +113,7 @@ class _CandiSiwaBuddha extends State {
   @override
   void initState() {
     super.initState();
-    mainSiwa();
+    mainSiwaBuddha();
   }
 
   @override
@@ -118,7 +125,7 @@ class _CandiSiwaBuddha extends State {
       ),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
-          future: mainSiwa(),
+          future: mainSiwaBuddha(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               print("DAta null");
@@ -127,7 +134,7 @@ class _CandiSiwaBuddha extends State {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    if (snapshot.data[index].gambar.value != '') {
+                    if (snapshot.data[index].gambar.value != "") {
                       return new Card(
                         elevation: 2.0,
                         shape: new RoundedRectangleBorder(
@@ -181,6 +188,8 @@ class _CandiSiwaBuddha extends State {
                                                           .data[index]
                                                           .gambar
                                                           .value,
+                                                      gambar1 : snapshot.data[index].gambar1.value,
+                                                      gambar2: snapshot.data[index].gambar2.value,
                                                       jenis: snapshot
                                                           .data[index]
                                                           .jenis
@@ -254,7 +263,7 @@ class _CandiSiwaBuddha extends State {
                             children: <Widget>[
                               new ClipRRect(
                                 child: new Image.network(
-                                    "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg"
+                                    "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg"
                                   //snapshot.data[index].gambar.value ?? 'https://via.placeholder.com/400x200',
                                 ),
                                 borderRadius: BorderRadius.only(
@@ -294,7 +303,11 @@ class _CandiSiwaBuddha extends State {
                                                           .lokasi
                                                           .value,
                                                       gambar:
-                                                      "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
+                                                      "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg",
+                                                      gambar1:
+                                                      "http://sharingdisini.com/wp-content/uploads/2012/10/Candi-Budha.png",
+                                                      gambar2:
+                                                      "https://i.pinimg.com/564x/41/d6/3b/41d63ba3378b5b142fd893f2a7952e4d.jpg",
                                                       jenis: snapshot
                                                           .data[index]
                                                           .jenis

@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
@@ -24,8 +22,6 @@ class _CandiDaerah extends State {
   List<Tripleset> jokes = [];
 
   Future<List<Tripleset>> mainDaerah() async {
-
-
     var payload = Uri.encodeComponent(
         "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
             "  prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
@@ -35,6 +31,8 @@ class _CandiDaerah extends State {
             "  SELECT DISTINCT ?lokasi (SAMPLE(?idasall)as ?idasal) (SAMPLE(?idx)as ?id) (SAMPLE(?candix) as ?candi)  (SAMPLE(?jenisx)as ?jenis)  (SAMPLE(?datax)as ?data)" +
             "  (GROUP_CONCAT(COALESCE(?arcas,''); separator = '' )as ?arca)" +
             " (GROUP_CONCAT(COALESCE(?gmbr,''); separator = '' )as ?gambar)" +
+            " (GROUP_CONCAT(COALESCE(?gmbr1,''); separator = '' )as ?gambar1)" +
+            " (GROUP_CONCAT(COALESCE(?gmbr2,''); separator = '' )as ?gambar2)" +
             " (GROUP_CONCAT(COALESCE(?mapp,''); separator = '' )as ?map)" +
             " (GROUP_CONCAT(COALESCE(?acara,''); separator = '' )as ?upacara)" +
             " (GROUP_CONCAT(COALESCE(?relieff,''); separator = '' )as ?relief)" +
@@ -58,6 +56,8 @@ class _CandiDaerah extends State {
             " OPTIONAL {?idx :terdiriDari ?idsb." +
             " ?idsb rdfs:label ?sb}" +
             "OPTIONAL {?idx :Gambar1 ?gmbr}" +
+            "OPTIONAL {?idx :Gambar2 ?gmbr1}" +
+            "OPTIONAL {?idx :Gambar3 ?gmbr2}" +
             " OPTIONAL {?idx :map ?mapp.}" +
             "OPTIONAL {?idx :tersusunDari ?idbahan." +
             " ?idbahan rdfs:label ?bahann.}" +
@@ -79,16 +79,18 @@ class _CandiDaerah extends State {
 
     if (response.statusCode == 200) {
       Map value = json.decode(response.body);
-      //  print(value);
+    //  print(value);
       var head = SparqlResult.fromJson(value);
       for (var data in head.results.listTriples) {
-        //   print(data);
+     //   print(data);
         Tripleset tp = Tripleset(
             data.id,
             data.idasal,
             data.candi,
             data.lokasi,
             data.gambar,
+            data.gambar1,
+            data.gambar2,
             data.jenis,
             data.deskripsi,
             data.arca,
@@ -159,7 +161,7 @@ class _CandiDaerah extends State {
                                 child: new Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       new ListTile(
                                         title: Text(
@@ -171,11 +173,16 @@ class _CandiDaerah extends State {
                                           icon: new Icon(
                                               FontAwesomeIcons.angleRight),
                                           onPressed: () {
-                                            Navigator.of(context).push(MaterialPageRoute(
-                                                builder: (context) => new Daerah(
-                                                  idasal:snapshot.data[index].lokasi.value.toString(),
-
-                                                )));
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        new Daerah(
+                                                          idasal: snapshot
+                                                              .data[index]
+                                                              .lokasi
+                                                              .value
+                                                              .toString(),
+                                                        )));
                                           },
                                         ),
                                       ),
@@ -201,7 +208,6 @@ class _CandiDaerah extends State {
                         // },
                       ),
                     );
-
                   });
             }
           },

@@ -51,6 +51,8 @@ class Tripleset {
   final TypeValue candi;
    final TypeValue lokasi;
    final TypeValue gambar;
+   final TypeValue gambar1;
+  final TypeValue gambar2;
   final TypeValue jenis;
   final TypeValue deskripsi;
   final TypeValue arca;
@@ -62,7 +64,7 @@ class Tripleset {
     final TypeValue map;
     final TypeValue data;
 
-  Tripleset(this.id, this.idasal,this.candi, this.lokasi, this.gambar, this.jenis, this.deskripsi,this.arca,this.upacara,this.relief,this.struktur_bangunan,this.bahan,this.namaLain,this.map,this.data);
+  Tripleset(this.id, this.idasal,this.candi, this.lokasi, this.gambar, this.gambar1,this.gambar2,this.jenis, this.deskripsi,this.arca,this.upacara,this.relief,this.struktur_bangunan,this.bahan,this.namaLain,this.map,this.data);
 
   factory Tripleset.fromJson(Map json) {
     return Tripleset(
@@ -71,6 +73,8 @@ class Tripleset {
       TypeValue.fromJson(json['candi']),
       TypeValue.fromJson(json['lokasi']),
       TypeValue.fromJson(json['gambar']),
+      TypeValue.fromJson(json['gambar1']),
+      TypeValue.fromJson(json['gambar2']),
       TypeValue.fromJson(json['jenis']),
          TypeValue.fromJson(json['deskripsi']),
         TypeValue.fromJson(json['arca']),
