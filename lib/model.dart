@@ -49,22 +49,39 @@ class Tripleset {
   final TypeValue id;
   final TypeValue idasal;
   final TypeValue candi;
-   final TypeValue lokasi;
-   final TypeValue gambar;
-   final TypeValue gambar1;
+  final TypeValue lokasi;
+  final TypeValue gambar;
+  final TypeValue gambar1;
   final TypeValue gambar2;
   final TypeValue jenis;
   final TypeValue deskripsi;
   final TypeValue arca;
-    final TypeValue upacara;
-    final TypeValue relief;
-    final TypeValue struktur_bangunan;
-    final TypeValue bahan;
-    final TypeValue namaLain;
-    final TypeValue map;
-    final TypeValue data;
+  final TypeValue upacara;
+  final TypeValue relief;
+  final TypeValue struktur_bangunan;
+  final TypeValue bahan;
+  final TypeValue namaLain;
+  final TypeValue map;
+  final TypeValue data;
 
-  Tripleset(this.id, this.idasal,this.candi, this.lokasi, this.gambar, this.gambar1,this.gambar2,this.jenis, this.deskripsi,this.arca,this.upacara,this.relief,this.struktur_bangunan,this.bahan,this.namaLain,this.map,this.data);
+  Tripleset(
+      this.id,
+      this.idasal,
+      this.candi,
+      this.lokasi,
+      this.gambar,
+      this.gambar1,
+      this.gambar2,
+      this.jenis,
+      this.deskripsi,
+      this.arca,
+      this.upacara,
+      this.relief,
+      this.struktur_bangunan,
+      this.bahan,
+      this.namaLain,
+      this.map,
+      this.data);
 
   factory Tripleset.fromJson(Map json) {
     return Tripleset(
@@ -76,21 +93,21 @@ class Tripleset {
       TypeValue.fromJson(json['gambar1']),
       TypeValue.fromJson(json['gambar2']),
       TypeValue.fromJson(json['jenis']),
-         TypeValue.fromJson(json['deskripsi']),
-        TypeValue.fromJson(json['arca']),
-        TypeValue.fromJson(json['upacara']),
+      TypeValue.fromJson(json['deskripsi']),
+      TypeValue.fromJson(json['arca']),
+      TypeValue.fromJson(json['upacara']),
       TypeValue.fromJson(json['relief']),
       TypeValue.fromJson(json['struktur_bangunan']),
       TypeValue.fromJson(json['bahan']),
       TypeValue.fromJson(json['namaLain']),
       TypeValue.fromJson(json['map']),
       TypeValue.fromJson(json['data']),
-
     );
   }
 
   String toString() {
-    String s = "${id}\t\t${candi}\t\t${lokasi}\t\t${gambar}\t\t${jenis}\t\t${deskripsi}\t\t${arca}\t\t${upacara}\t\t${relief}\t\t${struktur_bangunan}\t\t${bahan}\t\t${namaLain}";
+    String s =
+        "${id}\t\t${candi}\t\t${lokasi}\t\t${gambar}\t\t${jenis}\t\t${deskripsi}\t\t${arca}\t\t${upacara}\t\t${relief}\t\t${struktur_bangunan}\t\t${bahan}\t\t${namaLain}";
     return s;
   }
 }

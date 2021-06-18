@@ -115,216 +115,261 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: new Column(children: <Widget>[
-        Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 300.0,
-                width: MediaQuery.of(context).size.width,
-                child: Carousel(
-                  images: [
-                    NetworkImage(gambar),
-                    NetworkImage(gambar1),
-                    NetworkImage(gambar2),
+        body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              expandedHeight: 300.0,
+              floating: false,
+              pinned: true,
+              leading:
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 30.0,
+                  color: Colors.black,
+                  onPressed: () => Navigator.pop(context),
+                ),
+
+              flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  background:
+                  Carousel(
+                    images: [
+                      NetworkImage(gambar),
+                      NetworkImage(gambar1),
+                      NetworkImage(gambar2),
+                    ],
+                    autoplay: false,
+                    animationDuration: Duration(milliseconds: 1000),
+                    showIndicator: false,
+                    dotSize: 5.0,
+                    dotSpacing: 15.0,
+                    dotColor: Colors.grey,
+                    borderRadius: true,
+                    boxFit: BoxFit.cover,
+                  ),
+                  // Image.network(
+                  //   "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+                  //   fit: BoxFit.cover,
+                  // )
+              ),
+            ),
+          ];
+        },
+          body: SingleChildScrollView(
+            child: new Column(children: <Widget>[
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // SizedBox(
+                    //   height: 300.0,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child:
+                    //
+                    //
+                    // ),
                   ],
-                  autoplay: false,
-                  animationDuration: Duration(milliseconds: 1000),
-                  showIndicator: false,
-                  dotSize: 5.0,
-                  dotSpacing: 15.0,
-                  dotColor: Colors.grey,
-                  borderRadius: true,
                 ),
               ),
-            ],
-          ),
-        ),
-        new Column(
-          children: <Widget>[
-            Padding(
-              padding: new EdgeInsets.all(20.0),
-              child: new Column(
+              new Column(
                 children: <Widget>[
-                  new Text(
-                    candi,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  new IconButton(
-                      icon: new Icon(FontAwesomeIcons.mapMarkedAlt),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => new Peta(
-                                  map: map,
-                                )));
-                      }),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Nama Lain :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Asal :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(lokasi,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 2)))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Jenis :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(
-                        jenis,
-                        maxLines: 10,
-                        softWrap: false,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(height: 2),
-                      ))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Arca"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(arca,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1.5)))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Relief :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(relief,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1)))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Struktur Bangunan :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(sturktur_bangunan,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1)))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Bahan Bangunan :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(bahan,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1)))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Upacara :"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(upacara, style: TextStyle(height: 1))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text("Deskripsi"),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(deskripsi,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1)))
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      new Text(
-                        "Sumber :",
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                  new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                          child: Text(data,
-                              maxLines: 10,
-                              softWrap: false,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(height: 1, fontSize: 10)))
-                    ],
-                  ),
+                  Padding(
+                    padding: new EdgeInsets.all(20.0),
+                    child: new Column(
+                      children: <Widget>[
+                        new Text(
+                          candi,
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                        new IconButton(
+                            icon: new Icon(FontAwesomeIcons.mapMarkedAlt),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => new Peta(
+                                    map: map,
+                                  )));
+                            }),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Nama Lain :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Asal :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(lokasi,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 2)))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Jenis :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(
+                                  jenis,
+                                  maxLines: 10,
+                                  softWrap: false,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(height: 2),
+                                ))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Arca"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(arca,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 1.5)))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Relief :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(relief,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 1)))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Struktur Bangunan :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(sturktur_bangunan,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 1)))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Bahan Bangunan :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(bahan,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 1)))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Upacara :"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(upacara, style: TextStyle(height: 1))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text("Deskripsi"),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(deskripsi,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 1)))
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            new Text(
+                              "Sumber :",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
+                        new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Flexible(
+                                child: Text(data,
+                                    maxLines: 10,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(height: 1, fontSize: 10)))
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
+            ]),
+          ) ,
         ),
-      ]),
-    ));
+
+
+
+
+
+
+
+
+
+
+
+
+
+       );
   }
 }
