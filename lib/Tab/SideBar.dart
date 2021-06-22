@@ -45,7 +45,7 @@ class _SideBar extends State<SideBar>{
                 ),
               ),
               ListTile(
-                title: Text('Home'),
+                title: Text('Beranda'),
 
                 onTap: () => Navigator.pushNamed(
                   context,
@@ -110,21 +110,14 @@ class _SideBar extends State<SideBar>{
                 ),
               ),
               ListTile(
-                title: Text('About Us'),
+                title: Text('Tentang Kami'),
 
                 onTap: () => Navigator.pushNamed(
                   context,
                   'About',
                 ),
               ),
-              ListTile(
-                title: Text('search'),
 
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  'Cari',
-                ),
-              ),
 
             ],
           ),

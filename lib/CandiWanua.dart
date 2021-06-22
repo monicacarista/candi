@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import 'list_item.dart';
+import 'main.dart';
 
 class CandiWanua extends StatefulWidget {
   @override
@@ -20,52 +21,61 @@ class _CandiWanua extends State {
   List<Tripleset> jokes = [];
 
   Future<List<Tripleset>> mainWanua() async {
-    var payload = Uri.encodeComponent(
-        "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
-            "   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"+
-            "prefix : <http://alunalun.info/ontology/candi#>"+
-            "prefix schema: <http://schema.org/>"+
-            "PREFIX dbo: <http://dbpedia.org/ontology/>"+
-            "SELECT ?id ?candi"+
-            "(coalesce(group_concat(distinct ?arcas; separator ='\\n'), '') as ?arca)"+
-            "(coalesce(group_concat(distinct ?idasall; separator ='\\n'), '') as ?idasal)"+
-            "(coalesce(group_concat(distinct ?lokasii; separator ='\\n'), '') as ?lokasi)"+
-            "(coalesce(group_concat(distinct ?acara; separator ='\\n'), '') as ?upacara)"+
-            "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '') as ?bahan)"+
-            "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)"+
-            "(coalesce(group_concat(distinct ?gmbr1; separator ='\\n'), '') as ?gambar1)"+
-            "(coalesce(group_concat(distinct ?gmbr2; separator ='\\n'), '') as ?gambar2)"+
-            "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)"+
-            "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '') as ?relief)"+
-            "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '') as ?struktur_bangunan)"+
-            "(coalesce(group_concat(distinct ?nama; separator ='\\n'), '') as ?namaLain)"+
-            "(coalesce(group_concat(distinct ?desc; separator ='\\n'), '') as ?deskripsi)"+
-            "(coalesce(group_concat(distinct ?jeniss; separator ='\\n'), '') as ?jenis)"+
-            "(coalesce(group_concat(distinct ?dataa; separator ='\\n'), '') as ?data)"+
-            "WHERE {"+
-            " ?id rdf:type :CandiWanuaWatak ."+
-            "   :CandiWanuaWatak rdfs:label ?jeniss."+
-            "?id :sumberDB	?dataa."+
-            " ?id rdfs:label ?candi."+
-            "OPTIONAL{?id :Deskripsi ?desc.}"+
-            "?id :berasalDari ?idasall."+
-            "?idasall dbo:location ?lokasii."+
-            "OPTIONAL{?id :untukUpacara ?id."+
-            "?idu rdfs:label ?acara}"+
-            "OPTIONAL {?id :namaLainDari ?ida."+
-            "?ida rdfs:label ?nama}"+
-            "OPTIONAL {?id :terdapatRelief ?idrelief."+
-            "?idrelief rdfs:label ?relieff}"+
-            "OPTIONAL {?id :terdiriDari ?idsb."+
-            "?idsb rdfs:label ?sb}"+
-            "OPTIONAL {?id :Gambar1 ?gmbr}"+
-            "OPTIONAL {?id :Gambar2 ?gmbr1}"+
-            "OPTIONAL {?id :Gambar3 ?gmbr2}"+
-            "OPTIONAL {?id :map ?mapp.}"+
-            "OPTIONAL {?id :tersusunDari ?idbahan."+
-            "?idbahan rdfs:label ?bahann.}"+
-            "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}"+
-            "GROUP BY  ?id ?candi ");
+    var payload = Uri.encodeComponent("prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
+        "   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+        "prefix : <http://alunalun.info/ontology/candi#>" +
+        "prefix schema: <http://schema.org/>" +
+        "PREFIX dbo: <http://dbpedia.org/ontology/>" +
+        "PREFIX ca: <http://complyadvantage.com/>" +
+        "SELECT ?id ?candi" +
+        "(coalesce(group_concat(distinct ?arcas; separator ='\\n'), '-') as ?arca)" +
+        "(coalesce(group_concat(distinct ?idasall; separator ='\\n'), '-') as ?idasal)" +
+        "(coalesce(group_concat(distinct ?terdiridarii; separator ='\\n'), '-') as ?terdiridari)" +
+        "(coalesce(group_concat(distinct ?bagiann; separator ='\\n'), '-') as ?bagiandari)" +
+        "(coalesce(group_concat(distinct ?lokasii; separator ='\\n'), '-') as ?lokasi)" +
+        "(coalesce(group_concat(distinct ?acara; separator ='\\n'), '-') as ?upacara)" +
+        "(coalesce(group_concat(distinct ?bahann; separator ='\\n'), '-') as ?bahan)" +
+        "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)" +
+        "(coalesce(group_concat(distinct ?gmbr1; separator ='\\n'), '') as ?gambar1)" +
+        "(coalesce(group_concat(distinct ?gmbr2; separator ='\\n'), '') as ?gambar2)" +
+        "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)" +
+        "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '-') as ?relief)" +
+        "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '-') as ?struktur_bangunan)" +
+        "(coalesce(group_concat(distinct ?nama; separator ='\\n'), '-') as ?namaLain)" +
+        "(coalesce(group_concat(distinct ?desc; separator ='\\n'), '-') as ?deskripsi)" +
+        "(coalesce(group_concat(distinct ?jeniss; separator ='\\n'), '-') as ?jenis)" +
+        "(coalesce(group_concat(distinct ?dataa; separator ='\\n'), '') as ?data)" +
+        "(coalesce(group_concat(distinct ?sumberr; separator ='\\n'), '') as ?sumber)" +
+        "WHERE {" +
+        "?id rdf:type :CandiWanuaWatak ." +
+        "?id :sumberDB	?dataa." +
+        "?id rdfs:label ?candi." +
+        "OPTIONAL {?id rdf:type ?idtype." +
+        "?idtype rdfs:label ?jeniss}" +
+        "OPTIONAL {?id :terdapatCandi ?idterdiri." +
+        "?idterdiri rdfs:label ?terdiridarii}" +
+        "OPTIONAL {?id :bagian_dari ?idbagian." +
+        "?idbagian rdfs:label ?bagiann}" +
+        "OPTIONAL{?id :Deskripsi ?desc.}" +
+        "?id :berasalDari ?idasall." +
+        "?idasall dbo:location ?lokasii." +
+        "OPTIONAL{?id :untukUpacara ?id." +
+        "?idu rdfs:label ?acara}" +
+        "OPTIONAL {?id :namaLainDari ?ida." +
+        "?ida rdfs:label ?nama}" +
+        "OPTIONAL {?id :terdapatRelief ?idrelief." +
+        "?idrelief rdfs:label ?relieff}" +
+        "OPTIONAL {?id :terdiriDari ?idsb." +
+        "?idsb rdfs:label ?sb}" +
+        "OPTIONAL {?id :Gambar1 ?gmbr}" +
+        "OPTIONAL {?id :Gambar2 ?gmbr1}" +
+        "OPTIONAL {?id :Gambar3 ?gmbr2}" +
+        "OPTIONAL {?id :map ?mapp.}" +
+        "OPTIONAL {?id :tersusunDari ?idbahan." +
+        "?idbahan rdfs:label ?bahann.}" +
+        "OPTIONAL {?id :Sumber ?sumberr.}" +
+        "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}" +
+        "GROUP BY  ?id ?candi ");
 
     var headers = new Map<String, String>();
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -86,6 +96,8 @@ class _CandiWanua extends State {
         Tripleset tp = Tripleset(
             data.id,
             data.idasal,
+            data.terdiridari,
+            data.bagiandari,
             data.candi,
             data.lokasi,
             data.gambar,
@@ -99,7 +111,9 @@ class _CandiWanua extends State {
             data.struktur_bangunan,
             data.bahan,
             data.namaLain,
-            data.map,data.data);
+            data.map,
+            data.data,
+            data.sumber);
         //print(data);
         jokes.add(tp);
       }
@@ -119,15 +133,23 @@ class _CandiWanua extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Candi Wanua'),
+        title: Text('Candi Wanua Watak'),
         backgroundColor: Colors.blueGrey.shade700,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => new Search()));
+              })
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
           future: mainWanua(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
-              print("DAta null");
+              print("Data null");
               return CircularProgressIndicator();
             } else {
               return ListView.builder(
@@ -173,56 +195,85 @@ class _CandiWanua extends State {
                                             icon: new Icon(
                                                 FontAwesomeIcons.angleRight),
                                             onPressed: () {
-                                              Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (context) => new DetailPage(
-                                                      candi: snapshot
-                                                          .data[index]
-                                                          .candi
-                                                          .value,
-                                                      lokasi: snapshot
-                                                          .data[index]
-                                                          .lokasi
-                                                          .value,
-                                                      gambar: snapshot
-                                                          .data[index]
-                                                          .gambar
-                                                          .value,
-                                                      gambar1 : snapshot.data[index].gambar1.value,
-                                                      gambar2: snapshot.data[index].gambar2.value,
-                                                      jenis: snapshot
-                                                          .data[index]
-                                                          .jenis
-                                                          .value,
-                                                      deskripsi: snapshot
-                                                          .data[index]
-                                                          .deskripsi
-                                                          .value,
-                                                      arca: snapshot.data[index]
-                                                          .arca.value,
-                                                      upacara: snapshot
-                                                          .data[index]
-                                                          .upacara
-                                                          .value,
-                                                      relief: snapshot
-                                                          .data[index]
-                                                          .relief
-                                                          .value,
-                                                      sturktur_bangunan:
-                                                      snapshot
-                                                          .data[index]
-                                                          .struktur_bangunan
-                                                          .value,
-                                                      bahan: snapshot
-                                                          .data[index]
-                                                          .bahan
-                                                          .value,
-                                                      namaLain: snapshot
-                                                          .data[index]
-                                                          .namaLain
-                                                          .value,
-                                                      map: snapshot.data[index]
-                                                          .map.value,
-                                                      data: snapshot.data[index].data.value)));
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                      new DetailPage(
+                                                        candi: snapshot
+                                                            .data[index]
+                                                            .candi
+                                                            .value,
+                                                        lokasi: snapshot
+                                                            .data[index]
+                                                            .lokasi
+                                                            .value,
+                                                        gambar: snapshot
+                                                            .data[index]
+                                                            .gambar
+                                                            .value,
+                                                        gambar1: snapshot
+                                                            .data[index]
+                                                            .gambar1
+                                                            .value,
+                                                        gambar2: snapshot
+                                                            .data[index]
+                                                            .gambar2
+                                                            .value,
+                                                        jenis: snapshot
+                                                            .data[index]
+                                                            .jenis
+                                                            .value,
+                                                        terdiridari:
+                                                        snapshot
+                                                            .data[index]
+                                                            .terdiridari
+                                                            .value,
+                                                        bagiandari: snapshot
+                                                            .data[index]
+                                                            .bagiandari
+                                                            .value,
+                                                        deskripsi: snapshot
+                                                            .data[index]
+                                                            .deskripsi
+                                                            .value,
+                                                        arca: snapshot
+                                                            .data[index]
+                                                            .arca
+                                                            .value,
+                                                        upacara: snapshot
+                                                            .data[index]
+                                                            .upacara
+                                                            .value,
+                                                        relief: snapshot
+                                                            .data[index]
+                                                            .relief
+                                                            .value,
+                                                        sturktur_bangunan:
+                                                        snapshot
+                                                            .data[index]
+                                                            .struktur_bangunan
+                                                            .value,
+                                                        bahan: snapshot
+                                                            .data[index]
+                                                            .bahan
+                                                            .value,
+                                                        namaLain: snapshot
+                                                            .data[index]
+                                                            .namaLain
+                                                            .value,
+                                                        map: snapshot
+                                                            .data[index]
+                                                            .map
+                                                            .value,
+                                                        data: snapshot
+                                                            .data[index]
+                                                            .data
+                                                            .value,
+                                                        sumber: snapshot
+                                                            .data[index]
+                                                            .sumber
+                                                            .value,
+                                                      )));
                                             },
                                           ),
                                         ),
@@ -232,8 +283,7 @@ class _CandiWanua extends State {
                                             mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
-                                              new Text(snapshot
-                                                  .data[index].jenis.value),
+                                              new Text("Candi Wanua"),
                                               new Text(snapshot
                                                   .data[index].lokasi.value),
                                             ],
@@ -311,6 +361,14 @@ class _CandiWanua extends State {
                                                           .data[index]
                                                           .jenis
                                                           .value,
+                                                      terdiridari: snapshot
+                                                          .data[index]
+                                                          .terdiridari
+                                                          .value,
+                                                      bagiandari: snapshot
+                                                          .data[index]
+                                                          .bagiandari
+                                                          .value,
                                                       deskripsi: snapshot
                                                           .data[index]
                                                           .deskripsi
@@ -337,10 +395,9 @@ class _CandiWanua extends State {
                                                           .data[index]
                                                           .namaLain
                                                           .value,
-                                                      map: snapshot.data[index]
-                                                          .map.value,
-                                                      data: snapshot.data[index]
-                                                          .data.value)));
+                                                      map: snapshot.data[index].map.value,
+                                                      data: snapshot.data[index].data.value,
+                                                      sumber: snapshot.data[index].sumber.value)));
                                               //}
                                               // else
                                               // {
@@ -396,8 +453,7 @@ class _CandiWanua extends State {
                                             mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
-                                              new Text(snapshot
-                                                  .data[index].jenis.value),
+                                              new Text("Candi Wanua"),
                                               new Text(snapshot
                                                   .data[index].lokasi.value),
                                             ],

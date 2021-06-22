@@ -384,6 +384,8 @@ class _Search extends State<Search> {
         Tripleset tp = Tripleset(
             data.id,
             data.idasal,
+            data.terdiridari,
+            data.bagiandari,
             data.candi,
             data.lokasi,
             data.gambar,
@@ -398,7 +400,8 @@ class _Search extends State<Search> {
             data.bahan,
             data.namaLain,
             data.map,
-            data.data);
+            data.data,
+        data.sumber);
         //print(data);
         jokes.add(tp);
       }
@@ -542,7 +545,6 @@ class _Search extends State<Search> {
                                             leading: CircleAvatar(
                                               backgroundImage: NetworkImage(
                                                 "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
-
                                               )
 
                                             ),

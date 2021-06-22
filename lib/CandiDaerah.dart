@@ -12,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import 'list_item.dart';
+import 'main.dart';
 
 class CandiDaerah extends StatefulWidget {
   @override
@@ -28,17 +29,20 @@ class _CandiDaerah extends State {
             " prefix : <http://alunalun.info/ontology/candi#>" +
             " prefix schema: <http://schema.org/>" +
             "  PREFIX dbo: <http://dbpedia.org/ontology/>" +
-            "  SELECT DISTINCT ?lokasi (SAMPLE(?idasall)as ?idasal) (SAMPLE(?idx)as ?id) (SAMPLE(?candix) as ?candi)  (SAMPLE(?jenisx)as ?jenis)  (SAMPLE(?datax)as ?data)" +
-            "  (GROUP_CONCAT(COALESCE(?arcas,''); separator = '' )as ?arca)" +
+            "  SELECT DISTINCT ?lokasi (SAMPLE(?idasall)as ?idasal) (SAMPLE(?idx)as ?id) (SAMPLE(?candix) as ?candi)  (SAMPLE(?jenisx)as ?jenis)  (SAMPLE(?datax)as ?data)  " +
+            "  (GROUP_CONCAT(COALESCE(?arcas,''); separator = '-' )as ?arca)" +
             " (GROUP_CONCAT(COALESCE(?gmbr,''); separator = '' )as ?gambar)" +
             " (GROUP_CONCAT(COALESCE(?gmbr1,''); separator = '' )as ?gambar1)" +
             " (GROUP_CONCAT(COALESCE(?gmbr2,''); separator = '' )as ?gambar2)" +
             " (GROUP_CONCAT(COALESCE(?mapp,''); separator = '' )as ?map)" +
-            " (GROUP_CONCAT(COALESCE(?acara,''); separator = '' )as ?upacara)" +
-            " (GROUP_CONCAT(COALESCE(?relieff,''); separator = '' )as ?relief)" +
-            " (GROUP_CONCAT(COALESCE(?sb,''); separator = '' )as ?struktur_bangunan)" +
-            " (GROUP_CONCAT(COALESCE(?nama,''); separator = '' )as ?namaLain)" +
-            "(GROUP_CONCAT(COALESCE(?bahann,''); separator = '' )as ?bahan)" +
+            " (GROUP_CONCAT(COALESCE(?acara,''); separator = '-' )as ?upacara)" +
+            " (GROUP_CONCAT(COALESCE(?relieff,''); separator = '-' )as ?relief)" +
+            " (GROUP_CONCAT(COALESCE(?terdiridarii,''); separator = '-' )as ?terdiridari)" +
+            " (GROUP_CONCAT(COALESCE(?sumberr,''); separator = '-' )as ?sumber)" +
+            " (GROUP_CONCAT(COALESCE(?bagiann,''); separator = '-' )as ?bagiandari)" +
+            " (GROUP_CONCAT(COALESCE(?sb,''); separator = '-' )as ?struktur_bangunan)" +
+            " (GROUP_CONCAT(COALESCE(?nama,''); separator = '-' )as ?namaLain)" +
+            "(GROUP_CONCAT(COALESCE(?bahann,''); separator = '-' )as ?bahan)" +
             "(GROUP_CONCAT(COALESCE(?desc,''); separator = '' )as ?deskripsi)" +
             "  WHERE {" +
             "  ?idx :berasalDari ?idasall." +
@@ -51,6 +55,10 @@ class _CandiDaerah extends State {
             " ?idu rdfs:label ?acara}" +
             "OPTIONAL {?idx :namaLainDari ?ida." +
             "?ida rdfs:label ?nama}" +
+            "OPTIONAL {?idx :terdapatCandi ?idterdiri." +
+            "?idterdiri rdfs:label ?terdiridarii}" +
+            "OPTIONAL {?idx :bagian_dari ?idbagian." +
+            "?idbagian rdfs:label ?bagiann}" +
             "OPTIONAL {?idx :terdapatRelief ?idrelief." +
             " ?idrelief rdfs:label ?relieff}" +
             " OPTIONAL {?idx :terdiriDari ?idsb." +
@@ -61,6 +69,7 @@ class _CandiDaerah extends State {
             " OPTIONAL {?idx :map ?mapp.}" +
             "OPTIONAL {?idx :tersusunDari ?idbahan." +
             " ?idbahan rdfs:label ?bahann.}" +
+            "OPTIONAL {?idx :Sumber ?sumberr.}" +
             "OPTIONAL{?idx :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}" +
             "GROUP BY  ?lokasi");
     // var payload = Uri.encodeComponent("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX : <http://alunalun.info/ontology/candi#> PREFIX dbo: <http://dbpedia.org/ontology/>"+
@@ -75,7 +84,7 @@ class _CandiDaerah extends State {
         'https://app.alunalun.info/fuseki/candimobile/query',
         headers: headers,
         body: "query=${payload}");
-   // print(response.body);
+  // print(response.body);
 
     if (response.statusCode == 200) {
       Map value = json.decode(response.body);
@@ -86,6 +95,8 @@ class _CandiDaerah extends State {
         Tripleset tp = Tripleset(
             data.id,
             data.idasal,
+            data.terdiridari,
+            data.bagiandari,
             data.candi,
             data.lokasi,
             data.gambar,
@@ -100,7 +111,7 @@ class _CandiDaerah extends State {
             data.bahan,
             data.namaLain,
             data.map,
-            data.data);
+            data.data,  data.sumber);
         //print(data);
         jokes.add(tp);
       }
@@ -122,6 +133,14 @@ class _CandiDaerah extends State {
       appBar: AppBar(
         title: Text('Candi Daerah'),
         backgroundColor: Colors.blueGrey.shade700,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => new Search()));
+              })
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
