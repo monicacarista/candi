@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tes/Peta.dart';
@@ -375,12 +376,19 @@ class _DetailPageState extends State<DetailPage> {
                       new Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Flexible(
-                              child: Text(deskripsi,
-                                  maxLines: 30,
-                                  softWrap: false,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(height: 1)))
+                          // Html(
+                          //   data: deskripsi,
+                          // ),
+                          Flexible(child: Html(
+                            data: deskripsi,
+                          ),)
+                          // Flexible(
+                          //     child: Text(deskripsi,
+                          //         maxLines: 30,
+                          //         softWrap: false,
+                          //         overflow: TextOverflow.ellipsis,
+                          //         style: TextStyle(height: 1)))
+
                         ],
                       ),
                       new Row(

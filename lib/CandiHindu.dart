@@ -144,6 +144,7 @@ class _CandiHindu extends State {
               })
         ],
       ),
+      drawer: SideBar(),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
           future: mainHindu(),

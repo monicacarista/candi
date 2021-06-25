@@ -146,6 +146,7 @@ class   _CandiPribadi extends State {
               })
         ],
       ),
+      drawer: SideBar(),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
           future: mainPribadi(),

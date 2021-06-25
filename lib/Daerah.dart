@@ -156,6 +156,7 @@ class _Daerah extends State<Daerah> {
               })
         ],
       ),
+      drawer: SideBar(),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
           future: mainDaerah(),

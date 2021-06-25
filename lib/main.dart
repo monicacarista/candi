@@ -285,7 +285,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   ),
                   ListTile(
                       title: Text(
-                        "Candi Daerah",
+                        "Berdasarkan Daerah",
                         style: new TextStyle(fontWeight: FontWeight.bold),
                       ),
                       trailing: new IconButton(
@@ -333,6 +333,8 @@ class _Search extends State<Search> {
         "(coalesce(group_concat(distinct ?gmbr; separator ='\\n'), '') as ?gambar)" +
         "(coalesce(group_concat(distinct ?gmbr1; separator ='\\n'), '') as ?gambar1)" +
         "(coalesce(group_concat(distinct ?gmbr2; separator ='\\n'), '') as ?gambar2)" +
+        "(coalesce(group_concat(distinct ?terdiridarii; separator ='\\n'), '-') as ?terdiridari)" +
+        "(coalesce(group_concat(distinct ?bagiann; separator ='\\n'), '-') as ?bagiandari)" +
         "(coalesce(group_concat(distinct ?mapp; separator ='\\n'), '') as ?map)" +
         "(coalesce(group_concat(distinct ?relieff; separator ='\\n'), '') as ?relief)" +
         "(coalesce(group_concat(distinct ?sb; separator ='\\n'), '') as ?struktur_bangunan)" +
@@ -340,6 +342,7 @@ class _Search extends State<Search> {
         "(coalesce(group_concat(distinct ?desc; separator ='\\n'), '') as ?deskripsi)" +
         "(coalesce(group_concat(distinct ?jeniss; separator ='\\n'), '') as ?jenis)" +
         "(coalesce(group_concat(distinct ?dataa; separator ='\\n'), '') as ?data)" +
+        "(coalesce(group_concat(distinct ?sumberr; separator ='\\n'), '') as ?sumber)" +
         "WHERE {" +
         "?id rdf:type	?idtype." +
         "?idtype rdfs:label	?jeniss." +
@@ -360,8 +363,13 @@ class _Search extends State<Search> {
         "OPTIONAL {?id :Gambar2 ?gmbr1}" +
         "OPTIONAL {?id :Gambar3 ?gmbr2}" +
         "OPTIONAL {?id :map ?mapp.}" +
+        "OPTIONAL {?id :terdapatCandi ?idterdiri." +
+        "?idterdiri rdfs:label ?terdiridarii}" +
+        "OPTIONAL {?id :bagian_dari ?idbagian." +
+        "?idbagian rdfs:label ?bagiann}" +
         "OPTIONAL {?id :tersusunDari ?idbahan." +
         "?idbahan rdfs:label ?bahann.}" +
+        "OPTIONAL {?id :Sumber ?sumberr.}" +
         "OPTIONAL{?id :terdapatArca ?idarca. ?idarca rdfs:label ?arcas}}" +
         "GROUP BY  ?id ?candi ");
 
@@ -401,7 +409,7 @@ class _Search extends State<Search> {
             data.namaLain,
             data.map,
             data.data,
-        data.sumber);
+            data.sumber);
         //print(data);
         jokes.add(tp);
       }
@@ -475,23 +483,20 @@ class _Search extends State<Search> {
                         ? ListView.builder(
                             itemCount: _search.length,
                             itemBuilder: (context, index) {
-
                               final b = _search[index];
-                              if(b.gambar.value != ''){
+                              if (b.gambar.value != '') {
                                 return Container(
                                     padding: EdgeInsets.all(10.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         new ListTile(
-                                            leading:  CircleAvatar(
+                                            leading: CircleAvatar(
                                                 backgroundImage: NetworkImage(
-                                                  //"https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
-                                                  b.gambar.value,
-                                                )
-
-                                            ),
+                                              //"https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
+                                              b.gambar.value,
+                                            )),
                                             title: Text(b.candi.value),
                                             trailing: new IconButton(
                                               icon: new Icon(
@@ -500,54 +505,64 @@ class _Search extends State<Search> {
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                        new DetailPage(
-                                                          candi:
-                                                          b.candi.value,
-                                                          jenis:
-                                                          b.jenis.value,
-                                                          lokasi:
-                                                          b.lokasi.value,
-                                                          deskripsi: b
-                                                              .deskripsi
-                                                              .value,
-                                                          arca: b.arca.value,
-                                                          upacara:
-                                                          b.upacara.value,
-                                                          relief:
-                                                          b.relief.value,
-                                                          sturktur_bangunan: b
-                                                              .struktur_bangunan
-                                                              .value,
-                                                          bahan:
-                                                          b.bahan.value,
-                                                          namaLain: b
-                                                              .namaLain.value,
-                                                          map: b.map.value,
-                                                          gambar:
-                                                          b.gambar.value,
-                                                          gambar1: b.gambar1.value,
-                                                          gambar2: b.gambar2.value,
-
-                                                          data: b.data.value,
-                                                        )));
+                                                            new DetailPage(
+                                                              candi:
+                                                                  b.candi.value,
+                                                              jenis:
+                                                                  b.jenis.value,
+                                                              lokasi: b
+                                                                  .lokasi.value,
+                                                              deskripsi: b
+                                                                  .deskripsi
+                                                                  .value,
+                                                              arca:
+                                                                  b.arca.value,
+                                                              upacara: b.upacara
+                                                                  .value,
+                                                              terdiridari: b
+                                                                  .terdiridari
+                                                                  .value,
+                                                              bagiandari: b
+                                                                  .bagiandari
+                                                                  .value,
+                                                              relief: b
+                                                                  .relief.value,
+                                                              sturktur_bangunan:
+                                                                  b.struktur_bangunan
+                                                                      .value,
+                                                              bahan:
+                                                                  b.bahan.value,
+                                                              namaLain: b
+                                                                  .namaLain
+                                                                  .value,
+                                                              map: b.map.value,
+                                                              gambar: b
+                                                                  .gambar.value,
+                                                              gambar1: b.gambar1
+                                                                  .value,
+                                                              gambar2: b.gambar2
+                                                                  .value,
+                                                              data:
+                                                                  b.data.value,
+                                                              sumber: b
+                                                                  .sumber.value,
+                                                            )));
                                               },
                                             )),
                                       ],
                                     ));
-                              }else{
+                              } else {
                                 return Container(
                                     padding: EdgeInsets.all(10.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         new ListTile(
                                             leading: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
-                                              )
-
-                                            ),
+                                                backgroundImage: NetworkImage(
+                                              "https://candi.alunalun.info/img/CandiGebang1.fb759f20.jpg",
+                                            )),
                                             title: Text(b.candi.value),
                                             trailing: new IconButton(
                                               icon: new Icon(
@@ -556,49 +571,56 @@ class _Search extends State<Search> {
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                        new DetailPage(
-                                                          candi:
-                                                          b.candi.value,
-                                                          jenis:
-                                                          b.jenis.value,
-                                                          lokasi:
-                                                          b.lokasi.value,
-                                                          deskripsi: b
-                                                              .deskripsi
-                                                              .value,
-                                                          arca: b.arca.value,
-                                                          upacara:
-                                                          b.upacara.value,
-                                                          relief:
-                                                          b.relief.value,
-                                                          sturktur_bangunan: b
-                                                              .struktur_bangunan
-                                                              .value,
-                                                          bahan:
-                                                          b.bahan.value,
-                                                          namaLain: b
-                                                              .namaLain.value,
-                                                          map: b.map.value,
-                                                          gambar:
-                                                          "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg",
-                                                          gambar1:
-                                                          "http://sharingdisini.com/wp-content/uploads/2012/10/Candi-Budha.png",
-                                                          gambar2:
-                                                          "https://i.pinimg.com/564x/41/d6/3b/41d63ba3378b5b142fd893f2a7952e4d.jpg",
-
-                                                          data: b.data.value,
-                                                        )));
+                                                            new DetailPage(
+                                                              candi:
+                                                                  b.candi.value,
+                                                              jenis:
+                                                                  b.jenis.value,
+                                                              lokasi: b
+                                                                  .lokasi.value,
+                                                              deskripsi: b
+                                                                  .deskripsi
+                                                                  .value,
+                                                              arca:
+                                                                  b.arca.value,
+                                                              upacara: b.upacara
+                                                                  .value,
+                                                              relief: b
+                                                                  .relief.value,
+                                                              sturktur_bangunan:
+                                                                  b.struktur_bangunan
+                                                                      .value,
+                                                              bahan:
+                                                                  b.bahan.value,
+                                                              namaLain: b
+                                                                  .namaLain
+                                                                  .value,
+                                                              map: b.map.value,
+                                                              gambar:
+                                                                  "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg",
+                                                              gambar1:
+                                                                  "http://sharingdisini.com/wp-content/uploads/2012/10/Candi-Budha.png",
+                                                              gambar2:
+                                                                  "https://i.pinimg.com/564x/41/d6/3b/41d63ba3378b5b142fd893f2a7952e4d.jpg",
+                                                              terdiridari: b
+                                                                  .terdiridari
+                                                                  .value,
+                                                              bagiandari: b
+                                                                  .bagiandari
+                                                                  .value,
+                                                              data:
+                                                                  b.data.value,
+                                                              sumber: b
+                                                                  .sumber.value,
+                                                            )));
                                               },
-                                            )
-                                        ),
+                                            )),
                                       ],
-                                    )
-                                );
+                                    ));
                               }
                               // print("gambar");
                               // print(b.gambar.value);
                               // print(b.candi.value);
-
                             },
                           )
                         : ListView.builder(
@@ -606,21 +628,17 @@ class _Search extends State<Search> {
                             itemBuilder: (context, i) {
                               final a = jokes[i];
 
-
                               return Container(
                                   padding: EdgeInsets.all(10.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       new ListTile(
                                           leading: CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                               a.gambar.value,
-
-                                              )
-
-                                          ),
+                                            a.gambar.value,
+                                          )),
                                           title: Text(a.candi.value),
                                           trailing: new IconButton(
                                             icon: new Icon(
@@ -629,45 +647,41 @@ class _Search extends State<Search> {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                      new DetailPage(
-                                                        candi:
-                                                        a.candi.value,
-                                                        jenis:
-                                                        a.jenis.value,
-                                                        lokasi:
-                                                        a.lokasi.value,
-                                                        deskripsi: a
-                                                            .deskripsi
-                                                            .value,
-                                                        arca: a.arca.value,
-                                                        upacara:
-                                                        a.upacara.value,
-                                                        relief:
-                                                        a.relief.value,
-                                                        sturktur_bangunan: a
-                                                            .struktur_bangunan
-                                                            .value,
-                                                        bahan:
-                                                        a.bahan.value,
-                                                        namaLain: a
-                                                            .namaLain.value,
-                                                        map: a.map.value,
-                                                        gambar:
-                                                        "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg",
-                                                        gambar1:
-                                                        "http://sharingdisini.com/wp-content/uploads/2012/10/Candi-Budha.png",
-                                                        gambar2:
-                                                        "https://i.pinimg.com/564x/41/d6/3b/41d63ba3378b5b142fd893f2a7952e4d.jpg",
-
-                                                        data: a.data.value,
-                                                      )));
+                                                          new DetailPage(
+                                                            candi:
+                                                                a.candi.value,
+                                                            jenis:
+                                                                a.jenis.value,
+                                                            lokasi:
+                                                                a.lokasi.value,
+                                                            deskripsi: a
+                                                                .deskripsi
+                                                                .value,
+                                                            arca: a.arca.value,
+                                                            upacara:
+                                                                a.upacara.value,
+                                                            relief:
+                                                                a.relief.value,
+                                                            sturktur_bangunan: a
+                                                                .struktur_bangunan
+                                                                .value,
+                                                            bahan:
+                                                                a.bahan.value,
+                                                            namaLain: a
+                                                                .namaLain.value,
+                                                            map: a.map.value,
+                                                            gambar:
+                                                                "https://i.pinimg.com/564x/d1/d8/e5/d1d8e5990a1d4b43ee791be68451d4f7.jpg",
+                                                            gambar1:
+                                                                "http://sharingdisini.com/wp-content/uploads/2012/10/Candi-Budha.png",
+                                                            gambar2:
+                                                                "https://i.pinimg.com/564x/41/d6/3b/41d63ba3378b5b142fd893f2a7952e4d.jpg",
+                                                            data: a.data.value,
+                                                          )));
                                             },
-                                          )
-                                      ),
+                                          )),
                                     ],
-                                  )
-                              );
-
+                                  ));
                             },
                           ),
                   ),

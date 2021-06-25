@@ -144,6 +144,7 @@ class _CandiWanua extends State {
               })
         ],
       ),
+      drawer: SideBar(),
       body: Center(
         child: FutureBuilder<List<Tripleset>>(
           future: mainWanua(),

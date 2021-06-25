@@ -102,7 +102,7 @@ class _SideBar extends State<SideBar>{
                 ),
               ),
               ListTile(
-                title: Text('Candi Daerah'),
+                title: Text('Berdasarkan Daerah'),
 
                 onTap: () => Navigator.pushNamed(
                   context,
