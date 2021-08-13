@@ -29,7 +29,7 @@ void main() => runApp(MaterialApp(
         '/': (ctx) => SplashScreenPage(),
         'CandiNonKeagamaan': (context) => CandiNonKeagamaan(),
         'CandiWanua': (context) => CandiWanua(),
-        //  'CandiDaerah': (context) => CandiDaerah(),
+        'CandiDaerah': (context) => CandiDaerah(),
         'CandiKerajaan': (context) => CandiKerajaan(),
         'CandiPribadi': (context) => CandiPribadi(),
         'About': (context) => About(),
@@ -38,6 +38,8 @@ void main() => runApp(MaterialApp(
         //  'UserViewModel' : (context) => UserViewModel(),
         'MyApp': (context) => MyApp(),
         'Cari': (context) => Cari(),
+        'CandiHindu' : (context)=>CandiHindu(),
+        'CandiBuddha' : (context)=>CandiBuddha(),
       },
       debugShowCheckedModeBanner: false,
     ));
@@ -58,7 +60,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     CandiKerajaan(),
     CandiPribadi(),
     CandiWanua(),
-    // CandiDaerah(),
+    CandiHindu(),
+    CandiBuddha(),
+    CandiDaerah(),
     Peta(),
     // UserViewModel(),
     MyApp(),
@@ -624,9 +628,9 @@ class _Search extends State<Search> {
                             },
                           )
                         : ListView.builder(
-                            itemCount: jokes.length,
+                            itemCount: _search.length,
                             itemBuilder: (context, i) {
-                              final a = jokes[i];
+                              final a = _search[i];
 
                               return Container(
                                   padding: EdgeInsets.all(10.0),
@@ -683,7 +687,8 @@ class _Search extends State<Search> {
                                     ],
                                   ));
                             },
-                          ),
+                          )
+
                   ),
           ],
         ),

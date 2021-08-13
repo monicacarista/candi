@@ -37,8 +37,10 @@ class _info extends State<Info> with SingleTickerProviderStateMixin{
     return  Scaffold(
             appBar: AppBar(
               title: Text("INDOCANDI",
+
                 style: new TextStyle(
-                    fontSize: 24.0, fontWeight: FontWeight.bold
+                    fontSize: 24.0, fontWeight: FontWeight.bold,
+                  backgroundColor: Colors.blueGrey.shade700,
                 ),
               ),
               // leading:IconButton(icon: Icon(

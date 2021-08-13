@@ -224,7 +224,7 @@ class _DetailPageState extends State<DetailPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Text(
-                            "Asal :",
+                            "Lokasi :",
                             style: TextStyle(height: 2, fontWeight: FontWeight.bold),
                           ),
                         ],

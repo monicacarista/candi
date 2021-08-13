@@ -38,7 +38,8 @@ class _about extends State<About> with SingleTickerProviderStateMixin{
           appBar: AppBar(
             title: Text("WELCOME",
               style: new TextStyle(
-                  fontSize: 24.0, fontWeight: FontWeight.bold
+                  fontSize: 24.0, fontWeight: FontWeight.bold,
+
               ),
              ),
             // leading:IconButton(icon: Icon(
@@ -49,7 +50,7 @@ class _about extends State<About> with SingleTickerProviderStateMixin{
             //     }
             //     ),
 
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blueGrey.shade700,
             centerTitle: true,
 
 
